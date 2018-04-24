@@ -10,7 +10,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires = [
-        'OpenFisca-Country-Template >= 2.1.0,  < 3.0.0',
+        'OpenFisca-Country-Template >= 3.0.1,  < 4.0.0',
         ],
     extras_require = {
         'test': [
