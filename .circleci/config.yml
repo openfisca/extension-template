@@ -22,7 +22,7 @@ jobs:
           name: Install dependencies
           command: |
             make build
-            # pip install --editable git+https://github.com/openfisca/openfisca-country-template.git@BRANCH#egg=OpenFisca-Country-Template  # use a specific branch of OpenFisca-Country-template
+            pip install --editable git+https://github.com/openfisca/country-template.git@bump-numpy#egg=OpenFisca-Country-Template  # use a specific branch of OpenFisca-Country-template
 
       - save_cache:
           key: v1-py3-deps-{{ checksum "setup.py" }}
