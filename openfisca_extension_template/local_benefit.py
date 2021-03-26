@@ -26,7 +26,7 @@ class local_town_child_allowance(Variable):
         Extensions can only add variables and parameters to the tax and benefit
         system: they cannot modify or neutralize existing ones.
         """
-        nb_children = famille.nb_persons(role = Household.CHILD)
+        nb_children = famille.nb_persons(role=Household.CHILD)
         amount_by_child = parameters(period).local_town.child_allowance.amount
 
         return nb_children * amount_by_child
