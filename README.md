@@ -28,3 +28,33 @@ make test
 > [Learn more about tests](http://openfisca.org/doc/coding-the-legislation/writing_yaml_tests.html).
 
 Your extension package is now installed and ready!
+
+## Style
+
+This repository adheres to a certain coding style, and we invite you to follow it for your contributions to be integrated promptly.
+
+Style checking is already run with `make test`. To run the style checker alone:
+
+```sh
+make check-style
+```
+
+To automatically style-format your code changes:
+
+```sh
+make format-style
+```
+
+To automatically style-format your code changes each time you commit:
+
+```sh
+touch .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+
+tee -a .git/hooks/pre-commit << END
+#!/bin/sh
+#
+# Automatically format your code before committing.
+exec make format-style
+END
+```
