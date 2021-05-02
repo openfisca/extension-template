@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.3.7 - [#33](https://github.com/openfisca/extension-template/pull/33)
+
+* Minor change.
+* Details:
+  - Add support for `flake8-print` < 5
+
 ### 1.3.6 - [#36](https://github.com/openfisca/extension-template/pull/36)
 
 * Technical improvement.
