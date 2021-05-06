@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.3.9 - [#37](https://github.com/openfisca/extension-template/pull/37)
+
+* Technical change
+* Details:
+  - Migrate from deprecated Dependabot.com to GitHub-native Dependabot service
+  - Allows to track the dependencies updates according to new `.github/dependabot.yml` configuration file
+
 ### 1.3.8 - [#35](https://github.com/openfisca/extension-template/pull/35)
 
 * Minor change.
