@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.3.10 - [#42](https://github.com/openfisca/extension-template/pull/42)
+
+* Technical change
+* Details:
+  - Add tar.gz to PyPi to be used by conda to build conda package.
+
 ### 1.3.9 - [#37](https://github.com/openfisca/extension-template/pull/37)
 
 * Technical change

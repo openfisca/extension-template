@@ -1,10 +1,15 @@
 """This file contains your extension package's metadata and dependencies."""
 
+from pathlib import Path
 from setuptools import find_packages, setup
+
+# Read the contents of our README file for PyPi
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()  # pylint: disable=W1514
 
 setup(
     name = "OpenFisca-Extension-Template",
-    version = "1.3.9",
+    version = "1.3.10",
     author = "OpenFisca Team",
     author_email = "contact@openfisca.org",
     classifiers = [
@@ -18,12 +23,15 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         ],
     description = "An OpenFisca extension that adds some variables to an already-existing tax and benefit system",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     keywords = "benefit microsimulation social tax",
     license = "http://www.fsf.org/licensing/licenses/agpl-3.0.html",
+    license_files = ("LICENSE",),
     url = "https://github.com/openfisca/extension-template",
     include_package_data = True,  # Will read MANIFEST.in
     data_files = [
-        ("share/openfisca/openfisca-extension-template", ["CHANGELOG.md", "LICENSE", "README.md"]),
+        ("share/openfisca/openfisca-extension-template", ["CHANGELOG.md", "README.md"]),
         ],
     install_requires = [
         "OpenFisca-Country-Template >= 3.8.0,  < 4",
