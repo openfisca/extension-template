@@ -1,6 +1,7 @@
 """This file contains your extension package's metadata and dependencies."""
 
 from pathlib import Path
+
 from setuptools import find_packages, setup
 
 # Read the contents of our README file for PyPi
