@@ -21,6 +21,7 @@ build: clean deps
 	@# `make build` allows us to be be sure tests are run against the packaged version
 	@# of OpenFisca-Extension-Template, the same we put in the hands of users and reusers.
 	python -m build
+	pip uninstall --yes openfisca-extension-template
 	find dist -name "*.whl" -exec pip install --force-reinstall {}[dev] \;
 
 check-syntax-errors:
