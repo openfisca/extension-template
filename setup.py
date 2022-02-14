@@ -21,6 +21,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        'Programming Language :: Python :: 3.9',
         "Topic :: Scientific/Engineering :: Information Analysis",
         ],
     description = "An OpenFisca extension that adds some variables to an already-existing tax and benefit system",
