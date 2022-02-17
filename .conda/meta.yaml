@@ -1,0 +1,79 @@
+###############################################################################
+## Package description for Anaconda.org
+## Warning : string PYPI_VERSION, PYPI_URL and PYPI_SHA256 are replaced by CI
+## Keep them as is.
+###############################################################################
+
+{% set name = "OpenFisca-Extension-Template" %}
+{% set version = "PYPI_VERSION" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: PYPI_URL
+  sha256: PYPI_SHA256
+
+build:
+  noarch: python
+  number: 0
+  script: "python3 -m pip install . -vv"
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python >=3.6,<4.0
+    - OpenFisca-Country-Template >=3.8.0,<4
+
+test:
+  imports:
+    - openfisca_extension_template
+  requires:
+    - pytest >=4.4.1,<6.0.0
+    - pip
+  commands:
+    - pip check
+    # Next line failed because : ERROR: file not found: /usr/share/miniconda/conda-bld/openfisca-extension-template_1645107790700/test_tmp/openfisca_extension_template/tests
+    #- openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
+
+outputs:
+  - name: openfisca-extension-template
+
+  - name: openfisca-extension-template-dev
+    build:
+      noarch: python
+    requirements:
+      host:
+        - python
+      run:
+        - autopep8 >=1.5.4, <2.0.0
+        - flake8 >=3.8.0,<4.0.0
+        - flake8-bugbear >=20.1.0, <22.0.0
+        - flake8-builtins >=1.5.0, <2.0.0
+        - flake8-coding >=1.3.0, <2.0.0
+        - flake8-commas >=2.0.0, <3.0.0
+        - flake8-comprehensions >=3.2.0, <4.0.0
+        - flake8-docstrings >=1.5.0, <2.0.0
+        - flake8-import-order >=0.18.0, <1.0.0
+        - flake8-print >=3.1.0, <5.0.0
+        - flake8-quotes >=3.2.0, <4.0.0
+        - flake8-simplify >=0.9.0, <1.0.0
+        - flake8-use-fstring >=1.1.0, <2.0.0
+        - pylint >=2.6.0, <3.0.0
+        - pycodestyle >=2.6.0, <3.0.0
+        - {{ pin_subpackage('openfisca-extension-template', exact=True) }}
+
+about:
+  home: https://fr.openfisca.org/
+  license_family: AGPL
+  license: AGPL-3.0-only
+  license_file: LICENSE
+  summary: "OpenFisca tax and benefit system for extension-Template."
+  description: |
+    OpenFisca is a versatile microsimulation free software.
+    This repository contains the E  xtension-Template module, to work with OpenFisca.
+  doc_url: https://fr.openfisca.org/
+  dev_url: https://github.com/openfisca/extension-template/

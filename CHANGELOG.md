@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.3.11 - [#43](https://github.com/openfisca/extension-template/pull/43)
+
+* Technical change
+* Details:
+  - Move CI from Circle-CI to GitHubAction
+  - Add publish to conda in CI.
+
 ### 1.3.10 - [#42](https://github.com/openfisca/extension-template/pull/42)
 
 * Technical change
