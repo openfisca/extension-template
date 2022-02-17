@@ -4,7 +4,7 @@ There is two way of publishing to conda:
 - A fully automatic in CI that publish to an "openfisca" channel. See below for more information.
 - A more complex for Conda-Forge.
 
-We use both for openfisca-core but only _openfisca channel_ for _country-template_.
+We use both for openfisca-core but only _openfisca channel_ for _extension-template_.
 
 ## Automatic upload
 
@@ -27,6 +27,6 @@ To create the package you can do the following in the project root folder:
 
 - Build & Upload package:
     - `conda install -c anaconda conda-build anaconda-client`
-    - `conda build .conda`
+    - `conda build -c conda-forge -c openfisca .conda`
     - `anaconda login`
-    - `anaconda upload openfisca-country-template-<VERSION>-py_0.tar.bz2`
+    - `anaconda upload openfisca-extension-template-<VERSION>-py_0.tar.bz2`
