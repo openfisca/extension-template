@@ -124,8 +124,7 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.7.9"
-          # Add conda-forge
-          channels: conda-forge
+          channels: conda-forge,openfisca
           activate-environment: true
       - uses: actions/checkout@v2
         with:
