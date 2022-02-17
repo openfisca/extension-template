@@ -4,7 +4,7 @@
 ## Keep them as is.
 ###############################################################################
 
-{% set name = "OpenFisca-Country-Template" %}
+{% set name = "OpenFisca-Extension-Template" %}
 {% set version = "PYPI_VERSION" %}
 
 package:
@@ -26,20 +26,20 @@ requirements:
     - pip
   run:
     - python >=3.6,<4.0
-    - openfisca-core >=35.0.0,<36.0.0
+    - OpenFisca-Country-Template >=3.8.0,<4
 
 test:
   imports:
-    - openfisca_country_template
+    - openfisca_extension_template
   requires:
     - pip
   commands:
     - pip check
 
 outputs:
-  - name: openfisca-country-template
+  - name: openfisca-extension-template
 
-  - name: openfisca-country-template-dev
+  - name: openfisca-extension-template-dev
     build:
       noarch: python
     requirements:
@@ -48,18 +48,29 @@ outputs:
       run:
         - autopep8 >=1.5.4, <2.0.0
         - flake8 >=3.8.0,<4.0.0
+        - flake8-bugbear >= 20.1.0, <22.0.0
+        - flake8-builtins >= 1.5.0, <2.0.0
+        - flake8-coding >= 1.3.0, <2.0.0
+        - flake8-commas >= 2.0.0, <3.0.0
+        - flake8-comprehensions >= 3.2.0, <4.0.0
+        - flake8-docstrings >= 1.5.0, <2.0.0
+        - flake8-import-order >= 0.18.0, <1.0.0
+        - flake8-print >= 3.1.0, <5.0.0
+        - flake8-quotes >= 3.2.0, <4.0.0
+        - flake8-simplify >= 0.9.0, <1.0.0
+        - flake8-use-fstring >= 1.1.0, <2.0.0
         - pylint >=2.6.0, <3.0.0
         - pycodestyle >=2.6.0, <3.0.0
-        - {{ pin_subpackage('openfisca-country-template', exact=True) }}
+        - {{ pin_subpackage('openfisca-extension-template', exact=True) }}
 
 about:
   home: https://fr.openfisca.org/
   license_family: AGPL
   license: AGPL-3.0-only
   license_file: LICENSE
-  summary: "OpenFisca tax and benefit system for Country-Template."
+  summary: "OpenFisca tax and benefit system for extension-Template."
   description: |
     OpenFisca is a versatile microsimulation free software.
-    This repository contains the Country-Template module, to work with OpenFisca.
+    This repository contains the E  xtension-Template module, to work with OpenFisca.
   doc_url: https://fr.openfisca.org/
-  dev_url: https://github.com/openfisca/country-template/
+  dev_url: https://github.com/openfisca/extension-template/
