@@ -32,9 +32,11 @@ test:
   imports:
     - openfisca_extension_template
   requires:
+    - pytest >=4.4.1,<6.0.0
     - pip
   commands:
     - pip check
+    - openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
 
 outputs:
   - name: openfisca-extension-template
