@@ -50,7 +50,7 @@ jobs:
 
   check-version-and-changelog:
     runs-on: ubuntu-latest
-    needs: [ lint-files, test-yaml, test-api ] # Last job to run
+    needs: [ test ] # Last job to run
     steps:
       - uses: actions/checkout@v2
         with:
