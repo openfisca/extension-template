@@ -1,5 +1,14 @@
 # Changelog
 
+# 2.0.0 - [#46](https://github.com/openfisca/extension-template/pull/46)
+
+#### Breaking change
+
+* Technical improvement.
+* Details:
+  - Expire deprecated class `Bracket`.
+  - Functionality is now provided by `ParameterScaleBracket`
+
 ### 1.3.10 - [#42](https://github.com/openfisca/extension-template/pull/42)
 
 * Technical change
