@@ -1,5 +1,17 @@
 # Changelog
 
+# 2.0.0.rc1 - [#41](https://github.com/openfisca/extension-template/pull/47)
+
+#### New Features
+
+- Upgrade OpenAPI specification of the API to v3 from Swagger v2.
+- Continuously validate OpenAPI specification.
+
+#### Breaking changes
+
+- Drop support for OpenAPI specification v2 and prior.
+- Users relying on the aforesaid can use [this](https://converter.swagger.io/api/convert?url=OAS2_YAML_OR_JSON_URL) to migrate ([example](https://web.archive.org/web/20221103230822/https://converter.swagger.io/api/convert?url=https://api.demo.openfisca.org/latest/spec)).
+
 ### 1.3.10 - [#42](https://github.com/openfisca/extension-template/pull/42)
 
 * Technical change
