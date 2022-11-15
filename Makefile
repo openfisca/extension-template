@@ -8,7 +8,14 @@ clean:
 	find . -name '*.pyc' -exec rm \{\} \;
 
 deps:
-	pip install --upgrade pip build twine
+	@python -m pip install --upgrade \
+		nox \
+		nox-poetry \
+		pip \
+		poet-plugin \
+		poetry \
+		setuptools \
+		wheel
 
 install: deps
 	@# Install OpenFisca-Extension-Template for development.
