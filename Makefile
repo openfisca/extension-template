@@ -30,6 +30,11 @@ format:
 	@# Do not analyse .gitignored files.
 	@python -m poetry run autopep8 `git ls-files | grep "\.py$$"`
 
+lint:
+	@# Do not analyse .gitignored files.
+	@python -m poetry run flake8 `git ls-files | grep "\.py$$"`
+	@python -m poetry run pylint `git ls-files | grep "\.py$$"`
+
 build: clean deps
 	@# Install OpenFisca-Extension-Template for deployment and publishing.
 	@# `make build` allows us to be be sure tests are run against the packaged version
@@ -37,13 +42,6 @@ build: clean deps
 	@python -m build
 	@python -m pip uninstall --yes openfisca-extension-template
 	@find dist -name "*.whl" -exec pip install --force-reinstall {}[dev] \;
-
-
-check-style:
-	@# Do not analyse .gitignored files.
-	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	flake8 `git ls-files | grep "\.py$$"`
-	pylint `git ls-files | grep "\.py$$"`
 
 test: clean check-syntax-errors check-style
 	openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
