@@ -8,16 +8,13 @@ deps:
 		nox \
 		nox-poetry \
 		pip \
-		poet-plugin \
-		poetry \
-		setuptools \
-		wheel
+		poetry
 
 install: deps
 	@# Install OpenFisca-Extension-Template for development. `make install`
 	@# installs the editable version of OpenFisca-Extension-Template. This
 	@# allows contributors to test as they code.
-	@python -m pip install --editable .[dev] --upgrade
+	@python -m poetry install --extras "test"
 
 compile:
 	@python -m compileall -q src
@@ -26,14 +23,19 @@ clean:
 	@rm -rf build dist
 	@find . -name '*.pyc' -exec rm \{\} \;
 
-format:
+format: compile clean
 	@# Do not analyse .gitignored files.
 	@python -m poetry run autopep8 `git ls-files | grep "\.py$$"`
 
-lint:
+lint: compile clean
 	@# Do not analyse .gitignored files.
 	@python -m poetry run flake8 `git ls-files | grep "\.py$$"`
 	@python -m poetry run pylint `git ls-files | grep "\.py$$"`
+
+test: format lint
+	@python -m poetry run openfisca test `git ls-files | grep "test\.yaml$$"` \
+		--country-package openfisca_country_template \
+		--extensions openfisca_extension_template
 
 build: clean deps
 	@# Install OpenFisca-Extension-Template for deployment and publishing.
@@ -42,6 +44,3 @@ build: clean deps
 	@python -m build
 	@python -m pip uninstall --yes openfisca-extension-template
 	@find dist -name "*.whl" -exec pip install --force-reinstall {}[dev] \;
-
-test: clean check-syntax-errors check-style
-	openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
