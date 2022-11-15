@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "OpenFisca-Extension-Template"
+version = "1.3.10"
+description = "An extension adding new variables to a country package."
+license = "AGPL-3.0-only"
+authors = ["OpenFisca Team <contact@openfisca.org>"]
+maintainers = ["OpenFisca Team <contact@openfisca.org>"]
+readme = "README.md"
+homepage = "https://openfisca.org"
+repository = "https://github.com/openfisca/extension-template"
+documentation = "https://openfisca.org/doc"
+keywords = ["microsimulation", "tax", "benefit", "rac", "rules-as-code"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: POSIX",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    ]
+packages = [{include = "openfisca_extension_template", from = "src"}]
