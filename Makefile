@@ -1,3 +1,11 @@
+ifeq ($(OS),Windows_NT)
+    SHELL := bash.exe
+else
+    SHELL := /usr/bin/env bash
+endif
+
+.SHELLFLAGS := -eo pipefail -c
+
 .DEFAULT_GOAL := test
 
 uninstall:
