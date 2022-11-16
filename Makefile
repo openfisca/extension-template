@@ -3,14 +3,10 @@
 uninstall:
 	@pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
 
-deps:
-	@python -m pip install --upgrade \
-		nox \
-		nox-poetry \
-		pip \
-		poetry
+dependencies:
+	@python -m pip install --upgrade nox nox-poetry pip poetry
 
-install: deps
+install: dependencies
 	@# Install OpenFisca-Extension-Template for development. `make install`
 	@# installs the editable version of OpenFisca-Extension-Template. This
 	@# allows contributors to test as they code.
@@ -45,7 +41,7 @@ test: format type lint
 		--country-package openfisca_country_template \
 		--extensions openfisca_extension_template
 
-build: compile clean deps
+build: compile clean
 	@# Install OpenFisca-Extension-Template for deployment and publishing.
 	@# `make build` allows us to test against the packaged version of
 	@# of OpenFisca-Extension-Template, the same we put in the hands of users.

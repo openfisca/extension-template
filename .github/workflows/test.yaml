@@ -27,7 +27,7 @@ jobs:
           architecture: x64
 
       - name: Install dependencies
-        run: make deps
+        run: make dependencies
 
       - name: Run tests
         run: nox -s "test(python='${{ matrix.python }}')"
