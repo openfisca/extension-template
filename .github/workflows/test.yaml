@@ -33,44 +33,35 @@ jobs:
           python-version: ${{ matrix.python }}
           architecture: x64
 
-      - name: Cache dependencies
+      - name: Cache deps
         id: cache-deps
         uses: actions/cache@v3
         with:
           path: ${{ matrix.path }}
-          key: ${{ matrix.python }}-${{ matrix.os }}-${{ hashFiles('Makefile') }}
+          key: ${{ matrix.python }}-${{ matrix.os }}-${{ hashFiles('Makefile') }}-${{ hashFiles('poetry.lock') }}
           restore-keys: |
+            ${{ matrix.python }}-${{ matrix.os }}-${{ hashFiles('Makefile') }}-
             ${{ matrix.python }}-${{ matrix.os }}-
 
       - name: Dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: make dependencies
+        run: make install-deps
 
-      - name: Cache install
-        id: cache-install
+      - name: Cache dist
+        id: cache-dist
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.path }}
-          key: ${{ matrix.python }}-${{ matrix.os }}-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            ${{ matrix.python }}-${{ matrix.os }}-
-
-      - name: Install
-        if: steps.cache-install.outputs.cache-hit != 'true'
-        run: make install
-
-      - name: Cache Build
-        id: cache-build
-        uses: actions/cache@v3
-        with:
-          path: ${{ matrix.path }}
+          path: ${{ 'dist' }}
           key: ${{ matrix.python }}-${{ matrix.os }}-${{ github.sha }}
           restore-keys: |
             ${{ matrix.python }}-${{ matrix.os }}-
 
-      - name: Build
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        run: make build
+      - name: Build dist
+        if: steps.cache-dist.outputs.cache-hit != 'true'
+        run: make build-dst
+
+      - name: Install
+        run: make install-dst
 
       - name: Test
-        run: make test
+        run: make test-suite
