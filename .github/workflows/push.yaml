@@ -1,0 +1,80 @@
+on: [ push ]
+
+jobs:
+  push:
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: [3.7.9, 3.8.10, 3.9.13]
+        include:
+        - os: ubuntu-latest
+          bin: /opt/hostedtoolcache/Python/
+          pip: ~/.cache/pip
+          poetry: ~/.cache/pypoetry/virtualenvs
+        - os: macos-latest
+          bin: ~/hostedtoolcache/Python/
+          pip: ~/Library/Caches/pip
+          poetry: ~/Library/Caches/pypoetry/virtualenvs
+        - os: windows-latest
+          bin: C:\hostedtoolcache\windows\python\
+          pip: ~\AppData\Local\pip\Cache
+          poetry: ~\AppData\Local\pypoetry\Cache\virtualenvs
+
+    runs-on: ${{ matrix.os }}
+
+    name: push-${{ matrix.python }}-${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache Bin
+        id: cache-bin
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.bin }}${{ matrix.python }}
+          key: bin-${{ matrix.os }}-${{ matrix.python }}
+
+      - name: Cache Pip
+        id: cache-pip
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.pip }}
+          key: pip-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('Makefile') }}
+
+      - name: Cache Poetry
+        id: cache-poetry
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.poetry }}
+          key: pip-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Python setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+          architecture: x64
+
+      - name: Dependencies
+        run: make install-deps
+
+      - name: Build dist
+        run: make build-dst
+
+      - name: Install
+        run: make install-dst
+
+      - name: Lint
+        run: make lint
+
+      - name: Type
+        run: make type
+
+      - name: Test
+        run: make test
+
+      - name: Smoke test
+        run: ./src/openfisca_extension_template/tests/test-api.sh
