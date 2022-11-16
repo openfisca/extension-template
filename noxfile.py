@@ -7,7 +7,7 @@ nox.options.reuse_existing_virtualenvs = False
 
 
 @nox_poetry.session
-@nox.parametrize("python", ("3.7.15", "3.8.15", "3.9.15"))
+@nox.parametrize("python", ("3.7.9", "3.8.10", "3.9.13"))
 def test(session):
     """Run tests."""
     session.run("make", "install", external = True)
