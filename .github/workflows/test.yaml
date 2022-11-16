@@ -9,6 +9,13 @@ jobs:
       matrix:
         python: [3.7.9, 3.8.10, 3.9.13]
         os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+        - os: ubuntu-latest
+          path: ~/.cache/pip
+        - os: macos-latest
+          path: ~/Library/Caches/pip
+        - os: windows-latest
+          path: ~\AppData\Local\pip\Cache
 
     runs-on: ${{ matrix.os }}
 
@@ -26,8 +33,44 @@ jobs:
           python-version: ${{ matrix.python }}
           architecture: x64
 
-      - name: Install dependencies
+      - name: Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.path }}
+          key: ${{ matrix.python }}-${{ matrix.os }}-${{ hashFiles('Makefile') }}
+          restore-keys: |
+            ${{ matrix.python }}-${{ matrix.os }}-
+
+      - name: Dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: make dependencies
 
-      - name: Run tests
-        run: nox -s "test(python='${{ matrix.python }}')"
+      - name: Cache install
+        id: cache-install
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.path }}
+          key: ${{ matrix.python }}-${{ matrix.os }}-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ matrix.python }}-${{ matrix.os }}-
+
+      - name: Install
+        if: steps.cache-install.outputs.cache-hit != 'true'
+        run: make install
+
+      - name: Cache Build
+        id: cache-build
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.path }}
+          key: ${{ matrix.python }}-${{ matrix.os }}-${{ github.sha }}
+          restore-keys: |
+            ${{ matrix.python }}-${{ matrix.os }}-
+
+      - name: Build
+        if: steps.cache-build.outputs.cache-hit != 'true'
+        run: make build
+
+      - name: Test
+        run: make test

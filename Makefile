@@ -8,13 +8,13 @@ endif
 
 .DEFAULT_GOAL := test
 
+dependencies:
+	@python -m pip install --upgrade nox pip poetry nox-poetry
+
 uninstall:
 	@pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
 
-dependencies:
-	@python -m pip install --upgrade nox nox-poetry pip poetry
-
-install: dependencies
+install:
 	@# Install OpenFisca-Extension-Template for development. `make install`
 	@# installs the editable version of OpenFisca-Extension-Template. This
 	@# allows contributors to test as they code.
@@ -45,9 +45,10 @@ lint: compile clean
 	@python -m poetry run pylint `git ls-files | grep "\.py$$"`
 
 test: format type lint
-	@python -m poetry run openfisca test `git ls-files | grep "_test\.yaml$$"` \
-		--country-package openfisca_country_template \
-		--extensions openfisca_extension_template
+	@python -m poetry run \
+		openfisca test `git ls-files | grep "_test\.yaml$$"` \
+			--country-package openfisca_country_template \
+			--extensions openfisca_extension_template
 
 build: compile clean
 	@# Install OpenFisca-Extension-Template for deployment and publishing.
@@ -55,4 +56,5 @@ build: compile clean
 	@# of OpenFisca-Extension-Template, the same we put in the hands of users.
 	@python -m poetry build
 	@python -m pip uninstall --yes openfisca-extension-template
-	@find dist -name "*.whl" -exec pip install --force-reinstall {}[dev] \;
+	@find dist -name "*.whl" \
+		-exec pip install --force-reinstall --no-dependencies {} \;
