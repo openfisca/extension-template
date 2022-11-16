@@ -46,9 +46,10 @@ lint: compile clean
 
 test: format type lint
 	@python -m poetry run \
-		openfisca test `git ls-files | grep "_test\.yaml$$"` \
+		openfisca test `git ls-files | grep "test_.*\.yaml$$"` \
 			--country-package openfisca_country_template \
 			--extensions openfisca_extension_template
+	@sh src/openfisca_extension_template_tests/test-api.sh
 
 build: compile clean
 	@# Install OpenFisca-Extension-Template for deployment and publishing.
