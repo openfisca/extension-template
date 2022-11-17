@@ -14,7 +14,7 @@ This repository is here to help you bootstrap your own OpenFisca [extension](htt
 To install your extension, run:
 
 ```sh
-make install
+make install-deps install-src
 ```
 
 ## Testing
@@ -22,9 +22,21 @@ make install
 You can make sure that everything is working by running the provided tests:
 
 ```sh
-make test
+make test-suite
 ```
 
 > [Learn more about tests](http://openfisca.org/doc/coding-the-legislation/writing_yaml_tests.html).
 
 Your extension package is now installed and ready!
+
+## Troubleshooting
+
+OpenFisca is tested to run under `x64`; with Python `+3.7.9`, `+3.8.10`, and 
+`+3.9.13`; and on `OS X`, `Linux`, and `Windows`. If your contributions fail 
+in Github Actions, try to reproduce these errors with the follwing command:
+
+```sh
+python -m nox -s
+```
+
+> You'll need to have Python `3.7.9`, `3.8.10`, and `3.9.13` installed.

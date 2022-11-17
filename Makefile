@@ -1,42 +1,62 @@
-all: test
+ifeq ($(OS),Windows_NT)
+    SHELL := bash.exe
+else
+    SHELL := /usr/bin/env bash
+endif
+
+.SHELLFLAGS := -eo pipefail -c
+.DEFAULT_GOAL := all
+
+all: install-deps install-xtra install-src test-suite
+test-suite: format type lint test
 
 uninstall:
-	pip freeze | grep -v "^-e" | xargs pip uninstall -y
+	pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
+	python -m pip cache purge
+
+install-deps:
+	python -m pip install --upgrade nox pip poetry nox-poetry
+
+install-xtra: compile clean
+	@# Install OpenFisca-Extension-Template extra dependencies.
+	python -m poetry install --no-root --all-extras
+
+install-src: compile clean
+	@# Install OpenFisca-Extension-Template for development. `make install`
+	@# installs the editable version of OpenFisca-Extension-Template. This
+	@# allows contributors to test as they code.
+	python -m poetry install --only-root --all-extras
+
+build-dst: compile clean
+	@# `make build` allows us to test against the packaged version of
+	@# of OpenFisca-Extension-Template, the same we put in the hands of users.
+	python -m poetry build
+
+install-dst:
+	@# Install OpenFisca-Extension-Template for deployment and publishing.
+	find dist -name "*.whl" -exec python -m poetry run pip install --no-deps --force-reinstall {} \;
+
+format: compile clean
+	@# Do not analyse .gitignored files.
+	python -m poetry run isort `git ls-files | grep "\.py$$"`
+	python -m poetry run autopep8 `git ls-files | grep "\.py$$"`
+	python -m poetry run pyupgrade `git ls-files | grep "\.py$$"` --py37-plus --keep-runtime-typing
+
+type: compile clean
+	@# Do not analyse .gitignored files.
+	python -m poetry run mypy `git ls-files | grep "\.py$$"`
+
+lint: compile clean
+	@# Do not analyse .gitignored files.
+	python -m poetry run flake8 `git ls-files | grep "\.py$$"`
+	python -m poetry run pylint `git ls-files | grep "\.py$$"`
+
+test: compile clean
+	python -m poetry run openfisca test `git ls-files | grep "test_.*\.yaml$$"` --country-package openfisca_country_template --extensions openfisca_extension_template
+
+compile:
+	@python -m compileall -q src
 
 clean:
-	rm -rf build dist
-	find . -name '*.pyc' -exec rm \{\} \;
-
-deps:
-	pip install --upgrade pip build twine
-
-install: deps
-	@# Install OpenFisca-Extension-Template for development.
-	@# `make install` installs the editable version of OpenFisca-Extension-Template.
-	@# This allows contributors to test as they code.
-	pip install --editable .[dev] --upgrade
-
-build: clean deps
-	@# Install OpenFisca-Extension-Template for deployment and publishing.
-	@# `make build` allows us to be be sure tests are run against the packaged version
-	@# of OpenFisca-Extension-Template, the same we put in the hands of users and reusers.
-	python -m build
-	pip uninstall --yes openfisca-extension-template
-	find dist -name "*.whl" -exec pip install --force-reinstall {}[dev] \;
-
-check-syntax-errors:
-	python -m compileall -q .
-
-format-style:
-	@# Do not analyse .gitignored files.
-	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	autopep8 `git ls-files | grep "\.py$$"`
-
-check-style:
-	@# Do not analyse .gitignored files.
-	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	flake8 `git ls-files | grep "\.py$$"`
-	pylint `git ls-files | grep "\.py$$"`
-
-test: clean check-syntax-errors check-style
-	openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
+	@rm -rf build dist
+	@find . -name '*.pyc' -exec rm \{\} \;

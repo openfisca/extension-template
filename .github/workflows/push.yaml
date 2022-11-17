@@ -1,0 +1,19 @@
+name: Push
+
+on: [ push ]
+
+jobs:
+  lint:
+    uses: ./.github/workflows/_lint.yaml
+
+  test:
+    uses: ./.github/workflows/_test.yaml
+
+  type:
+    uses: ./.github/workflows/_type.yaml
+
+  version:
+    uses: ./.github/workflows/_version.yaml
+
+  web-api:
+    uses: ./.github/workflows/_web-api.yaml
