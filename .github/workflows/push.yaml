@@ -9,21 +9,22 @@ jobs:
         python: [3.7.9, 3.8.10, 3.9.13]
         include:
         - os: ubuntu-latest
-          bin: /opt/hostedtoolcache/Python/
-          pip: ~/.cache/pip
-          poetry: ~/.cache/pypoetry/virtualenvs
+          pip: /opt/hostedtoolcache/Python/
+          bin: /x64/bin/
+          lib: /x64/lib/
         - os: macos-latest
-          bin: ~/hostedtoolcache/Python/
-          pip: ~/Library/Caches/pip
-          poetry: ~/Library/Caches/pypoetry/virtualenvs
+          pip: ~/hostedtoolcache/Python/
+          bin: /x64/bin/
+          lib: /x64/lib/
         - os: windows-latest
-          bin: C:\hostedtoolcache\windows\python\
-          pip: ~\AppData\Local\pip\Cache
-          poetry: ~\AppData\Local\pypoetry\Cache\virtualenvs
+          pip: C:\hostedtoolcache\windows\python\
+          bin: \x64\scripts\
+          lib: \x64\lib\
 
     runs-on: ${{ matrix.os }}
-
-    name: push-${{ matrix.python }}-${{ matrix.os }}
+    name: push-${{ matrix.os }}-${{ matrix.python }}
+    env:
+      POETRY_VIRTUALENVS_IN_PROJECT: true
 
     steps:
       - name: Checkout
@@ -32,24 +33,21 @@ jobs:
           fetch-depth: 0
 
       - name: Cache Bin
-        id: cache-bin
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.bin }}${{ matrix.python }}
-          key: bin-${{ matrix.os }}-${{ matrix.python }}
+          path: ${{ matrix.pip }}${{ matrix.python }}${{ matrix.bin }}
+          key: bin-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('Makefile') }}
 
-      - name: Cache Pip
-        id: cache-pip
+      - name: Cache Lib
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.pip }}
-          key: pip-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('Makefile') }}
+          path: ${{ matrix.pip }}${{ matrix.python }}${{ matrix.lib }}
+          key: lib-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('Makefile') }}
 
       - name: Cache Poetry
-        id: cache-poetry
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.poetry }}
+          path: .venv
           key: pip-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('poetry.lock') }}
 
       - name: Python setup
@@ -58,8 +56,11 @@ jobs:
           python-version: ${{ matrix.python }}
           architecture: x64
 
-      - name: Dependencies
+      - name: Install dependencies
         run: make install-deps
+
+      - name: Install extras
+        run: make install-xtra
 
       - name: Build dist
         run: make build-dst

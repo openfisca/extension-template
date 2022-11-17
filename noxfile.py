@@ -13,6 +13,7 @@ def e2e(session):
     session.run(
         "make",
         "install-deps",
+        "install-xtra",
         "build-dst",
         "install-dst",
         "test-suite",

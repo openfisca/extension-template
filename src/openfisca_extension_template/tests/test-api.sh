@@ -3,7 +3,7 @@
 PORT=5000
 ENDPOINT=spec
 
-openfisca serve \
+python -m poetry run openfisca serve \
     --country-package openfisca_country_template \
     --extensions openfisca_extension_template \
     --port $PORT &
