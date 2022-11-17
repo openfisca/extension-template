@@ -1,81 +1,16 @@
+name: Push
+
 on: [ push ]
 
 jobs:
-  push:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python: [3.7.9, 3.8.10, 3.9.13]
-        include:
-        - os: ubuntu-latest
-          pip: /opt/hostedtoolcache/Python/
-          bin: /x64/bin/
-          lib: /x64/lib/
-        - os: macos-latest
-          pip: ~/hostedtoolcache/Python/
-          bin: /x64/bin/
-          lib: /x64/lib/
-        - os: windows-latest
-          pip: C:\hostedtoolcache\windows\python\
-          bin: \x64\scripts\
-          lib: \x64\lib\
+  lint:
+    uses: ./.github/workflows/_lint.yaml
 
-    runs-on: ${{ matrix.os }}
-    name: push-${{ matrix.os }}-${{ matrix.python }}
-    env:
-      POETRY_VIRTUALENVS_IN_PROJECT: true
+  test:
+    uses: ./.github/workflows/_test.yaml
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  type:
+    uses: ./.github/workflows/_type.yaml
 
-      - name: Cache Bin
-        uses: actions/cache@v3
-        with:
-          path: ${{ matrix.pip }}${{ matrix.python }}${{ matrix.bin }}
-          key: bin-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('Makefile') }}
-
-      - name: Cache Lib
-        uses: actions/cache@v3
-        with:
-          path: ${{ matrix.pip }}${{ matrix.python }}${{ matrix.lib }}
-          key: lib-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('Makefile') }}
-
-      - name: Cache Poetry
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: pip-${{ matrix.os }}-${{ matrix.python }}-${{ hashFiles('poetry.lock') }}
-
-      - name: Python setup
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python }}
-          architecture: x64
-
-      - name: Install dependencies
-        run: make install-deps
-
-      - name: Install extras
-        run: make install-xtra
-
-      - name: Build dist
-        run: make build-dst
-
-      - name: Install
-        run: make install-dst
-
-      - name: Lint
-        run: make lint
-
-      - name: Type
-        run: make type
-
-      - name: Test
-        run: make test
-
-      - name: Smoke test
-        run: ./src/openfisca_extension_template/tests/test-api.sh
+  web-api:
+    uses: ./.github/workflows/_web-api.yaml
