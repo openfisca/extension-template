@@ -1,30 +1,22 @@
-name: Web API
+name: Version
 
 on: [ workflow_call ]
 
 jobs:
-  web-api:
+  version:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python: [3.7.9, 3.8.10, 3.9.13]
+        os: [ubuntu-latest]
+        python: [3.9.13]
         include:
         - os: ubuntu-latest
           pip: /opt/hostedtoolcache/Python/
           bin: /x64/bin/
           lib: /x64/lib/
-        - os: macos-latest
-          pip: ~/hostedtoolcache/Python/
-          bin: /x64/bin/
-          lib: /x64/lib/
-        - os: windows-latest
-          pip: C:\hostedtoolcache\windows\python\
-          bin: \x64\scripts\
-          lib: \x64\lib\
 
     runs-on: ${{ matrix.os }}
-    name: web-api-${{ matrix.os }}-${{ matrix.python }}
+    name: version-${{ matrix.os }}-${{ matrix.python }}
     env:
       POETRY_VIRTUALENVS_IN_PROJECT: true
 
@@ -61,7 +53,7 @@ jobs:
       - name: Install dependencies
         run: make install-deps
 
-      - name: Install extras
+      - name: Version
         run: make install-xtra
 
       - name: Build dist
@@ -70,6 +62,5 @@ jobs:
       - name: Install
         run: make install-dst
 
-      - name: Smoke test
-        run: ./src/openfisca_extension_template/tests/test-web-api.sh
-
+      - name: Type
+        run: ./src/openfisca_extension_template/tests/test-version.sh

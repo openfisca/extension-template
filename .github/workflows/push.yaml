@@ -12,5 +12,8 @@ jobs:
   type:
     uses: ./.github/workflows/_type.yaml
 
+  version:
+    uses: ./.github/workflows/_version.yaml
+
   web-api:
     uses: ./.github/workflows/_web-api.yaml
