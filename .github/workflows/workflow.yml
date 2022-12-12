@@ -1,4 +1,4 @@
-name: Country-Template
+name: Extension-Template
 
 on:
   push:
@@ -74,7 +74,7 @@ jobs:
         with:
           path: ${{ env.pythonLocation }}
           key: build-${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ github.sha }}
-      - run: openfisca test --country-package openfisca_country_template openfisca_country_template/tests
+      - run: openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
 
   test-api:
     runs-on: ubuntu-20.04
