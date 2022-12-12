@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.3.11 - [#51](https://github.com/openfisca/extension-template/pull/51)
+
+* Technical Changes
+* Details:
+  * Migrate from CircleCI to Github Actions
+
 ### 1.3.10 - [#42](https://github.com/openfisca/extension-template/pull/42)
 
 * Technical change
