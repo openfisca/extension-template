@@ -10,7 +10,7 @@ long_description = (this_directory / "README.md").read_text()  # pylint: disable
 
 setup(
     name = "OpenFisca-Extension-Template",
-    version = "1.3.10",
+    version = "1.3.11",
     author = "OpenFisca Team",
     author_email = "contact@openfisca.org",
     classifiers = [
@@ -36,7 +36,7 @@ setup(
         ("share/openfisca/openfisca-extension-template", ["CHANGELOG.md", "README.md"]),
         ],
     install_requires = [
-        "OpenFisca-Country-Template >= 3.8.0,  < 4",
+        "OpenFisca-Country-Template >= 5.0.0,  < 6",
         ],
     extras_require = {
         "dev": [
@@ -53,8 +53,9 @@ setup(
             "flake8-quotes >= 3.2.0, < 4.0.0",
             "flake8-simplify >= 0.9.0, < 1.0.0",
             "flake8-use-fstring >= 1.1.0, < 2.0.0",
+            "importlib-metadata < 4.3.0",
+            "pycodestyle >= 2.7.0, < 2.8.0",
             "pylint >= 2.6.0, < 3.0.0",
-            "pycodestyle >= 2.6.0, < 3.0.0",
             ],
         },
     packages = find_packages(),
