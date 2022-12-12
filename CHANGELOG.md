@@ -1,6 +1,6 @@
 # Changelog
 
-# 2.0.0.rc1 - [#41](https://github.com/openfisca/extension-template/pull/47)
+# 2.0.0 - [#41](https://github.com/openfisca/extension-template/pull/47)
 
 #### New Features
 
