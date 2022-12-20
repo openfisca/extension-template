@@ -30,7 +30,9 @@ check-syntax-errors:
 format-style:
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
+	isort `git ls-files | grep "\.py$$"`
 	autopep8 `git ls-files | grep "\.py$$"`
+	pyupgrade `git ls-files | grep "\.py$$"` --py37-plus
 
 check-style:
 	@# Do not analyse .gitignored files.
