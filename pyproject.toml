@@ -81,6 +81,7 @@ check-str-concat-over-line-jumps = true
 disable = [
     "C0103", # We snake case variables and reforms
     "C0115", # We already labelise variables
+    "E0213", # We don't use self in formulas
     "E1101", # False positive, as members are defined dynamically,
     "R6301"
     ]
