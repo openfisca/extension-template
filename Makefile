@@ -26,6 +26,7 @@ lint: clean check-syntax-errors
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
 	flake8 `git ls-files | grep "\.py$$"`
 	pylint `git ls-files | grep "\.py$$"`
+	yamllint `git ls-files | grep "\.py$$"`
 
 test: clean check-syntax-errors
 	openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
