@@ -20,14 +20,14 @@ check-syntax-errors:
 format:
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	poetry run autopep8 `git ls-files | grep "\.py$$"`
+	autopep8 `git ls-files | grep "\.py$$"`
 
 lint: clean check-syntax-errors
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	poetry run flake8 `git ls-files | grep "\.py$$"`
-	poetry run pylint `git ls-files | grep "\.py$$"`
-	poetry run yamllint `git ls-files | grep "\.yaml$$"`
+	flake8 `git ls-files | grep "\.py$$"`
+	pylint `git ls-files | grep "\.py$$"`
+	yamllint `git ls-files | grep "\.yaml$$"`
 
 test: clean check-syntax-errors
 	openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
