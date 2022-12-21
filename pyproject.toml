@@ -45,6 +45,7 @@ importlib-metadata = {version = "<4.13.0", python = "~3.7.9"}
 mypy = "^0.990"
 pycodestyle = "^2.7.0"
 pylint = "^2.15.0"
+yamllint = "^1.28.0"
 
 [tool.poetry.group.build]
 optional = true

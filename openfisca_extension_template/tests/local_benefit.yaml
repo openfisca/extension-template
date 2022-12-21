@@ -1,3 +1,4 @@
+---
 - name: "A couple with 2 children gets 200€"
   period: 2016-01
   input:
@@ -30,4 +31,3 @@
         age: 35
   output:
     local_town_child_allowance: 0
-
