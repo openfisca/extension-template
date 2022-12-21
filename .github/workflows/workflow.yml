@@ -27,7 +27,7 @@ jobs:
 
       - name: Lint files
         run: |
-          tox lint
+          tox -r lint
 
   test:
     runs-on: ubuntu-20.04
@@ -44,7 +44,7 @@ jobs:
           python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
 
       - name: Run OpenFisca-Core tests
-        run: tox --recreate test
+        run: tox -r test
 
   test-api:
     runs-on: ubuntu-20.04
