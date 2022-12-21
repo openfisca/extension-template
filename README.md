@@ -9,9 +9,25 @@ This repository is here to help you bootstrap your own OpenFisca [extension](htt
 
 ## Installing
 
-> We recommend that you [use a virtualenv](https://github.com/openfisca/country-template/blob/master/README.md#setting-up-a-virtual-environment-with-pew) to install OpenFisca. If you don't, you may need to add `--user` at the end of all commands starting by `pip`.
+> We recommend you to use an [isolated](https://pypi.org/project/pipx/)
+> environment manager to manage build and extension dependencies separately:
 
-To install your extension, run:
+```sh
+pipx install poetry
+pipx install tox
+```
+
+> We also recommend you to use a [virtualenv](https://github.com/pyenv/pyenv-virtualenv)
+> manager to install OpenFisca:
+
+```sh
+pyenv install 3.9.16
+pyenv virtualenv 3.9.16 my-super-duper-extension-3.9.16
+cd ~/path/where/is/my-super-duper-extension-3.9.16
+pyenv local my-super-duper-extension-3.9.16
+```
+
+To install your extension for development, run:
 
 ```sh
 make install
@@ -22,7 +38,7 @@ make install
 You can make sure that everything is working by running the provided tests:
 
 ```sh
-make test
+make lint test test-api
 ```
 
 > [Learn more about tests](http://openfisca.org/doc/coding-the-legislation/writing_yaml_tests.html).
