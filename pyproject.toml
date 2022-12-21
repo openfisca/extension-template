@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openfisca_extension_template"
-version = "1.3.11"
+version = "2.0.0"
 description = "An extension adding new variables to a country package."
 license = "AGPL-3.0-only"
 authors = ["OpenFisca Team <contact@openfisca.org>"]

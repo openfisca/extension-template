@@ -22,6 +22,7 @@ jobs:
         with:
           python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
           cache: poetry
+          cache-dependency-path: pyproject.toml
 
       - name: Install dependencies
         run: make install

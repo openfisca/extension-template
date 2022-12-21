@@ -12,7 +12,7 @@ install:
 	@# The editable version of OpenFisca-Extension-Template allows contributors
 	@# to test as they code.
 	pip install --upgrade pip
-	poetry install --sync
+	poetry install
 
 check-syntax-errors:
 	python -m compileall -q .

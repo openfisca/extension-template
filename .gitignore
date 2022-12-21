@@ -2,6 +2,7 @@
 *.egg-info
 *.pyc
 .idea
+.poetry.lock
 .python-version
 .tox
 build
