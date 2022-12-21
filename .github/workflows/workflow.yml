@@ -63,14 +63,15 @@ jobs:
   check-version-and-changelog:
     runs-on: ubuntu-20.04
     needs: [ lint, test, test-api ] # Last job to run
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Fetch all the tags
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7.12
+
+      - name: Install dependencies
+        run: pipx install poetry
+
       - name: Check version number has been properly updated
         run: "${GITHUB_WORKSPACE}/.github/is-version-number-acceptable.sh"
 
