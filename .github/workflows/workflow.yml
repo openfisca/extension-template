@@ -26,7 +26,7 @@ jobs:
       - name: Cache tests
         uses: actions/cache@v3
         with:
-          path: openfisca_extension_template/tests
+          path: tox.ini openfisca_extension_template/tests
           key: tests-${{ github.sha }}
 
       - name: Cache build
@@ -80,7 +80,7 @@ jobs:
       - name: Restore tests
         uses: actions/cache@v3
         with:
-          path: openfisca_extension_template/tests
+          path: tox.ini openfisca_extension_template/tests
           key: tests-${{ github.sha }}
 
       - name: Restore build
@@ -89,7 +89,7 @@ jobs:
           path: dist
           key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
 
-      - name: Test the Python API
+      - name: Run the test suite
         run: tox
 
   check-version-and-changelog:
