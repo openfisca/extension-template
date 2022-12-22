@@ -31,6 +31,3 @@ lint: clean check-syntax-errors
 
 test: clean check-syntax-errors
 	openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
-
-test-api:
-	./.github/test-api.sh

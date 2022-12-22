@@ -2,14 +2,49 @@ name: Extension-Template
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    types: [ assigned, opened, reopened, synchronize, ready_for_review ]
+    types: [assigned, opened, reopened, synchronize, ready_for_review]
   workflow_dispatch:
 
 jobs:
+  build:
+    runs-on: ubuntu-20.04
+    needs: [build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
+
+      - name: Cache tests
+        uses: actions/cache@v3
+        with:
+          path: openfisca_extension_template/tests
+          key: tests-${{ github.sha }}
+
+      - name: Cache build
+        id: cache-build
+        uses: actions/cache@v3
+        with:
+          path: dist
+          key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
+
+      - name: Build package
+        if: steps.cache-build.outputs.cache-hit != 'true'
+        run: poetry build
+
   lint:
     runs-on: ubuntu-20.04
+    needs: [build]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,7 +57,7 @@ jobs:
         with:
           python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
           cache: poetry
-          cache-dependency-path: pyproject.toml
+          cache-dependency-path: poetry.lock
 
       - name: Install dependencies
         run: make install
@@ -32,10 +67,9 @@ jobs:
 
   test:
     runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    needs: [build]
 
+    steps:
       - name: Install Tox
         run: pipx install tox
 
@@ -43,30 +77,25 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
+
+      - name: Restore tests
+        uses: actions/cache@v3
+        with:
+          path: openfisca_extension_template/tests
+          key: tests-${{ github.sha }}
+
+      - name: Restore build
+        uses: actions/cache@v3
+        with:
+          path: dist
+          key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
 
       - name: Test the Python API
-        run: tox -e test
-
-  test-api:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install Tox
-        run: pipx install tox
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
-
-      - name: Test the Web API
-        run: tox -e test-api
+        run: tox
 
   check-version-and-changelog:
     runs-on: ubuntu-20.04
-    needs: [ lint, test, test-api ] # Last job to run
+    needs: [lint, test] # Last job to run
 
     steps:
       - uses: actions/checkout@v3
@@ -84,8 +113,9 @@ jobs:
   # The `deploy` job is dependent on the output of the `check-for-functional-changes`job.
   check-for-functional-changes:
     runs-on: ubuntu-20.04
+    needs: [check-version-and-changelog]
     if: github.ref == 'refs/heads/master' # Only triggered for the `master` branch
-    needs: [ check-version-and-changelog ]
+
     outputs:
       status: ${{ steps.stop-early.outputs.status }}
 
@@ -102,7 +132,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-20.04
-    needs: [ check-for-functional-changes ]
+    needs: [check-for-functional-changes]
     if: needs.check-for-functional-changes.outputs.status == 'success'
 
     env:
@@ -117,8 +147,16 @@ jobs:
       - name: Install Poetry
         run: pipx install poetry
 
+      - name: Restore build
+        uses: actions/cache@v3
+        with:
+          path: dist
+          key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
+
       - name: Upload dist to PyPi
-        run: poetry --build --username $PYPI_USERNAME --password $PYPI_PASSWORD
+        run: poetry publish --username $PYPI_USERNAME --password $PYPI_PASSWORD
 
       - name: Publish a git tag
-        run: ./.github/publish-git-tag.sh
+        run: |
+          git tag $(poetry version --short)
+          git push --tags # update the repository version
