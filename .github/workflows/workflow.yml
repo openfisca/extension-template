@@ -27,8 +27,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            tox.ini
+            Makefile
             openfisca_extension_template/tests
+            poetry.lock
+            tox.ini
           key: tests-${{ github.sha }}
 
       - name: Cache build
@@ -83,8 +85,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            tox.ini
+            Makefile
             openfisca_extension_template/tests
+            poetry.lock
+            tox.ini
           key: tests-${{ github.sha }}
 
       - name: Restore build
