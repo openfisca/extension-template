@@ -47,6 +47,7 @@ pycodestyle = "^2.7.0"
 pylint = "^2.15.0"
 types-urllib3 = "^1.26.25.4"
 yamllint = "^1.28.0"
+pylint-pytest = "^1.1.2"
 
 [tool.autopep8]
 aggressive = 3
@@ -65,7 +66,7 @@ no-accept-encodings = true
 strictness = "short"
 
 [tool.pylint."MASTER"]
-load-plugins = ["pylint.extensions.no_self_use"]
+load-plugins = ["pylint.extensions.no_self_use", "pylint_pytest"]
 
 [tool.pylint."STRING"]
 check-quote-consistency = true
@@ -77,7 +78,7 @@ disable = [
     "C0115", # We already labelise variables
     "E0213", # We don't use self in formulas
     "E1101", # False positive, as members are defined dynamically,
-    "R6301"
+
     ]
 score = "no"
 
