@@ -6,8 +6,10 @@ A variable is a property of an Entity such as a Person, a Household…
 See https://openfisca.org/doc/key-concepts/variables.html
 """
 
-# Import from openfisca-core the Python objects used to code the legislation in OpenFisca
-# Import the entities specifically defined for this tax and benefit system
+# Import from openfisca-core the Python objects used to code the legislation in
+# OpenFisca. Import the entities specifically defined for this tax and benefit
+# system.
+
 from openfisca_core.periods import MONTH
 from openfisca_core.variables import Variable
 from openfisca_country_template.entities import Household
@@ -20,11 +22,19 @@ class local_town_child_allowance(Variable):
     label = "Local benefit: a fixed amount by child each month"
 
     def formula(famille, period, parameters):
-        """
-        Local benefit.
+        """Local benefit.
 
         Extensions can only add variables and parameters to the tax and benefit
-        system: they cannot modify or neutralize existing ones.
+        system (they cannot modify or neutralize existing ones).
+
+        Args:
+            period: The period of the variable.
+            parameters: Parameters that are used in the formula.
+
+        Returns:
+            The amount per child multiplied by the number of children, for each
+            household in `family`.
+
         """
         nb_children = famille.nb_persons(role = Household.CHILD)
         amount_by_child = parameters(period).local_town.child_allowance.amount
