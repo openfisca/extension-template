@@ -12,10 +12,6 @@ trim_trailing_whitespace = true
 indent_size = 4
 indent_style = tab
 
-[*.robot]
-indent_size = 4
-indent_style = tab
-
 [*.{py,pyi,rst,toml}]
 indent_size = 4
 
