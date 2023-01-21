@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.3.12 - [#52](https://github.com/openfisca/extension-template/pull/52)
+
+* Minor change.
+* Details:
+  - Add .editorconfig for consistency of editor settings across packages
+
 ### 1.3.11 - [#51](https://github.com/openfisca/extension-template/pull/51)
 
 * Technical Changes
