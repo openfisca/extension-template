@@ -14,9 +14,3 @@ indent_style = tab
 
 [*.{py,pyi,rst,toml}]
 indent_size = 4
-
-[*.md]
-trim_trailing_whitespace = false
-
-[*.{diff,patch}]
-trim_trailing_whitespace = false
