@@ -30,7 +30,9 @@ check-syntax-errors:
 format-style:
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
+	isort `git ls-files | grep "\.py$$"`
 	autopep8 `git ls-files | grep "\.py$$"`
+	pyupgrade `git ls-files | grep "\.py$$"` --py37-plus
 
 check-style:
 	@# Do not analyse .gitignored files.
@@ -39,4 +41,6 @@ check-style:
 	pylint `git ls-files | grep "\.py$$"`
 
 test: clean check-syntax-errors check-style
-	openfisca test openfisca_extension_template/tests --country-package openfisca_country_template --extensions openfisca_extension_template
+	openfisca test openfisca_extension_template/tests \
+		  --country-package openfisca_country_template \
+		  --extensions openfisca_extension_template

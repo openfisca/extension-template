@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.3.13 - [#53](https://github.com/openfisca/extension-template/pull/53)
+
+* Minor change.
+* Details:
+  - Improve format with isort & pyupgrade
+    - This to help transition to py3.8 and np1.21+
+
 ### 1.3.12 - [#52](https://github.com/openfisca/extension-template/pull/52)
 
 * Minor change.
