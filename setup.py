@@ -10,7 +10,7 @@ long_description = (this_directory / "README.md").read_text()  # pylint: disable
 
 setup(
     name = "OpenFisca-Extension-Template",
-    version = "1.3.12",
+    version = "1.3.13",
     author = "OpenFisca Team",
     author_email = "contact@openfisca.org",
     classifiers = [
