@@ -1,5 +1,12 @@
 # Changelog
 
+### [#55](https://github.com/openfisca/extension-template/pull/55)
+
+* Technical improvement.
+* Details:
+  - Use PyPi token for authentication on CI `deploy` job
+  - Allows for Python package upload since the 2FA enforcement on PyPi
+
 ### 1.3.13 - [#53](https://github.com/openfisca/extension-template/pull/53)
 
 * Minor change.
