@@ -1,6 +1,6 @@
 # Changelog
 
-### [#55](https://github.com/openfisca/extension-template/pull/55)
+### 1.3.14 - [#55](https://github.com/openfisca/extension-template/pull/55)
 
 * Technical improvement.
 * Details:
