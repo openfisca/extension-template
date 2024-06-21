@@ -132,8 +132,6 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [ check-for-functional-changes ]
     if: needs.check-for-functional-changes.outputs.status == 'success'
-    env:
-      PYPI_TOKEN_OPENFISCA_BOT: ${{ secrets.PYPI_TOKEN_OPENFISCA_BOT }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -155,6 +153,6 @@ jobs:
           path: dist
           key: release-${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ github.sha }}
       - name: Upload a Python package to PyPi
-        run: twine upload dist/* --username __token__ --password $PYPI_TOKEN_OPENFISCA_BOT
+        run: twine upload dist/* --username __token__ --password ${{ secrets.PYPI_TOKEN }}
       - name: Publish a git tag
         run: "${GITHUB_WORKSPACE}/.github/publish-git-tag.sh"
