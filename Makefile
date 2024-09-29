@@ -1,7 +1,7 @@
 all: test
 
 uninstall:
-	pip freeze | grep -v "^-e" | xargs pip uninstall -y
+	pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
 
 clean:
 	rm -rf build dist
@@ -30,17 +30,19 @@ check-syntax-errors:
 format-style:
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
+	ruff format `git ls-files | grep "\.py$$"`
 	isort `git ls-files | grep "\.py$$"`
-	autopep8 `git ls-files | grep "\.py$$"`
-	pyupgrade `git ls-files | grep "\.py$$"` --py37-plus
+	black `git ls-files | grep "\.py$$"`
 
 check-style:
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	flake8 `git ls-files | grep "\.py$$"`
-	pylint `git ls-files | grep "\.py$$"`
+	ruff check `git ls-files | grep "\.py$$"`
+	isort --check `git ls-files | grep "\.py$$"`
+	black --check `git ls-files | grep "\.py$$"`
 
 test: clean check-syntax-errors check-style
-	openfisca test openfisca_extension_template/tests \
-		  --country-package openfisca_country_template \
-		  --extensions openfisca_extension_template
+	openfisca test \
+		--country-package=openfisca_country_template \
+		--extensions=openfisca_extension_template \
+		openfisca_extension_template/tests
