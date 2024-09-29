@@ -84,7 +84,7 @@ docstring-code-format = true
 docstring-code-line-length = 72
 
 [tool.ruff.lint]
-ignore = ["COM812", "D101", "ISC001", "N801", "N805"]
+ignore = ["COM812", "D101", "D104", "ISC001", "N801", "N805"]
 select = ["ALL"]
 
 [tool.ruff.lint.pydocstyle]
