@@ -27,15 +27,15 @@ class local_town_child_allowance(Variable):
         Extensions can only add variables and parameters to the tax and benefit
         system: they cannot modify or neutralize existing ones.
 
-        Parameters:
+        Args:
             family: a population of entities.
             period: an `Instant` to calculate the variable.
-            params: a bounded function to query for model's parameters.
+            parameters: a bounded function to query for model's parameters.
 
         Returns:
             A vector with the corresponding values per entity.
 
         """
         nb_children = family.nb_persons(role=Household.CHILD)
-        amount_by_child = params(period).local_town.child_allowance.amount
+        amount_by_child = parameters(period).local_town.child_allowance.amount
         return nb_children * amount_by_child
