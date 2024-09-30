@@ -1,5 +1,13 @@
 # Changelog
 
+### 1.3.15 - [#57](https://github.com/openfisca/extension-template/pull/57)
+
+* Crash fix.
+* Details:
+  - Add pyproject.toml
+  - Fix variables not being loaded
+  - Upgrade country-template to latest
+
 ### 1.3.14 - [#55](https://github.com/openfisca/extension-template/pull/55)
 
 * Technical improvement.
