@@ -7,8 +7,6 @@ See:
 
 """
 
-from openfisca_core import types as t
-
 # Import the openfisca-core objects used to code the legislation in OpenFisca.
 from openfisca_core.periods import MONTH
 from openfisca_core.variables import Variable
@@ -23,7 +21,7 @@ class local_town_child_allowance(Variable):
     definition_period = MONTH
     label = "Local benefit: a fixed amount by child each month"
 
-    def formula(family: t.Population, period: t.Instant, params: t.Params) -> t.Array:
+    def formula(family, period, parameters):
         """Local benefit.
 
         Extensions can only add variables and parameters to the tax and benefit
