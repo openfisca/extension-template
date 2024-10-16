@@ -38,7 +38,7 @@ make install
 You can make sure that everything is working by running the provided tests:
 
 ```sh
-make lint test test
+make lint test
 ```
 
 > [Learn more about tests](http://openfisca.org/doc/coding-the-legislation/writing_yaml_tests.html).
