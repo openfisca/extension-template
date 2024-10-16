@@ -35,8 +35,8 @@ black = "^24.8.0"
 isort = "^5.13.2"
 ruff = "^0.6.9"
 ruff-lsp = "^0.0.57"
-yamllint = "^1.35.1"
 pyproject-fmt = "^2.3.1"
+yamllint = "^1.35.1"
 
 [tool.black]
 target_version = [ "py39", "py310", "py311" ]
@@ -90,10 +90,9 @@ column_width = 79
 indent = 4
 
 [tool.pytest.ini_options]
-addopts = "--exitfirst --showlocals --doctest-modules"
+addopts = "--exitfirst --showlocals --doctest-modules --disable-warnings"
 testpaths = [ "openfisca_extension_template/tests" ]
 python_files = "**/*.py"
-filterwarnings = [ "ignore::DeprecationWarning" ]
 
 [tool.tox]
 requires = [ "tox>=4.19" ]

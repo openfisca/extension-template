@@ -10,7 +10,7 @@ if ! $(dirname "$BASH_SOURCE")/has-functional-changes.sh; then
     exit 0
 fi
 
-current_version=$(poetry version --short)
+current_version=$(python setup.py --version)
 
 if git rev-parse --verify --quiet $current_version; then
     echo "Version $current_version already exists in commit:"
