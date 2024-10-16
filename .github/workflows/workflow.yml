@@ -9,22 +9,25 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Poetry
         run: pipx install poetry
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
+          # Patch version must be specified to avoid any cache confusion, since
+          # the cache key depends on the full Python version. Any potential
+          # difference in patches between jobs will lead to a cache not found error.
+          python-version: 3.9.20
 
       - name: Cache tests
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             Makefile
@@ -35,7 +38,7 @@ jobs:
 
       - name: Cache build
         id: cache-build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: dist
           key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
@@ -45,20 +48,20 @@ jobs:
         run: poetry build
 
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [build]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Poetry
         run: pipx install poetry
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
+          python-version: 3.9.20
           cache: poetry
           cache-dependency-path: poetry.lock
 
@@ -69,7 +72,7 @@ jobs:
         run: make lint
 
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [build]
 
     steps:
@@ -77,12 +80,12 @@ jobs:
         run: pipx install tox
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.7.12 # Patch version must be specified to avoid any cache confusion, since the cache key depends on the full Python version. Any potentiel difference in patches between jobs will lead to a cache not found error.
+          python-version: 3.9.20
 
       - name: Restore tests
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             Makefile
@@ -92,20 +95,20 @@ jobs:
           key: tests-${{ github.sha }}
 
       - name: Restore build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: dist
           key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
 
       - name: Run the test suite
-        run: tox
+        run: tox -r -e py39
 
   check-version-and-changelog:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [lint, test] # Last job to run
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all the tags
 
@@ -115,11 +118,12 @@ jobs:
       - name: Check version number has been properly updated
         run: ./.github/is-version-number-acceptable.sh
 
-  # GitHub Actions does not have a halt job option, to stop from deploying if no functional changes were found.
-  # We build a separate job to substitute the halt option.
-  # The `deploy` job is dependent on the output of the `check-for-functional-changes`job.
+  # GitHub Actions does not have a halt job option, to stop from deploying if
+  # no functional changes were found. We build a separate job to substitute the
+  # halt option. The `deploy` job is dependent on the output of the
+  # `check-for-functional-changes`job.
   check-for-functional-changes:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [check-version-and-changelog]
     if: github.ref == 'refs/heads/master' # Only triggered for the `master` branch
 
@@ -127,27 +131,24 @@ jobs:
       status: ${{ steps.stop-early.outputs.status }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all the tags
-
-      - name: Install Poetry
-        run: pipx install poetry
 
       - id: stop-early
         run: if "./.github/has-functional-changes.sh" ; then echo "::set-output name=status::success" ; fi
 
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [check-for-functional-changes]
     if: needs.check-for-functional-changes.outputs.status == 'success'
 
     env:
-      PYPI_USERNAME: openfisca-bot
-      PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      PYPI_USERNAME: __token__
+      PYPI_PASSWORD: ${{ secrets.PYPI_TOKEN_OPENFISCA_BOT }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all the tags
 
@@ -155,7 +156,7 @@ jobs:
         run: pipx install poetry
 
       - name: Restore build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: dist
           key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}

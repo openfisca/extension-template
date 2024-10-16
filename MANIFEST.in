@@ -1,1 +1,2 @@
-recursive-include openfisca_extension_template *
+graft openfisca_extension_template
+global-exclude *~ *.py[cod] *.so

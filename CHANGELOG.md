@@ -8,6 +8,34 @@
     - Uses `poetry` to ensure deterministic builds
     - Uses `tox` to test builds in isolation
 
+### 1.3.15 - [#57](https://github.com/openfisca/extension-template/pull/57)
+
+* Crash fix.
+* Details:
+  - Add pyproject.toml
+  - Fix variables not being loaded
+  - Upgrade country-template to latest
+
+### 1.3.14 - [#55](https://github.com/openfisca/extension-template/pull/55)
+
+* Technical improvement.
+* Details:
+  - Use PyPi token for authentication on CI `deploy` job
+  - Allows for Python package upload since the 2FA enforcement on PyPi
+
+### 1.3.13 - [#53](https://github.com/openfisca/extension-template/pull/53)
+
+* Minor change.
+* Details:
+  - Improve format with isort & pyupgrade
+    - This to help transition to py3.8 and np1.21+
+
+### 1.3.12 - [#52](https://github.com/openfisca/extension-template/pull/52)
+
+* Minor change.
+* Details:
+  - Add .editorconfig for consistency of editor settings across packages
+
 ### 1.3.11 - [#51](https://github.com/openfisca/extension-template/pull/51)
 
 * Technical Changes

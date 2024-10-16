@@ -1,9 +1,10 @@
 """Smoke-test to ensure the API runs and returns a valid response."""
 
-from subprocess import SubprocessError, TimeoutExpired
-from urllib import request
 import json
 import subprocess
+from http import client
+from subprocess import SubprocessError, TimeoutExpired
+from urllib import request
 
 import pytest
 
@@ -17,17 +18,15 @@ timeout = 10
 @pytest.fixture
 def payload():
     """Return the payload to use for the API test."""
-
     return {
         "timeout": timeout,
         "url": f"http://{host}:{port}/{endpoint}",
-        }
+    }
 
 
 @pytest.fixture
-def _server():
+def server():
     """Return a server subprocess."""
-
     cmd = [
         "openfisca",
         "serve",
@@ -37,12 +36,12 @@ def _server():
         "openfisca_extension_template",
         "--port",
         str(port),
-        ]
+    ]
 
-    with subprocess.Popen(cmd, stdout = pipe, stderr = pipe) as proc:
+    with subprocess.Popen(cmd, stdout=pipe, stderr=pipe) as proc:
         for _ in range(timeout * 100 + 1):
             try:
-                _, out = proc.communicate(timeout = timeout / 100)
+                _, out = proc.communicate(timeout=timeout / 100)
 
             except TimeoutExpired as error:
                 out = error.stderr
@@ -56,17 +55,19 @@ def _server():
 
         elif out is not None:
             proc.terminate()
-            raise SubprocessError(f"Failed to start!\n{out.decode('utf-8')}")
+            msg = f"Failed to start!\n{out.decode('utf-8')}"
+            raise SubprocessError(msg)
 
         else:
             proc.terminate()
-            raise SubprocessError("Failed to start!")
+            msg = "Failed to start!"
+            raise SubprocessError(msg)
 
 
-def test_openfisca_server(payload, _server):
+@pytest.mark.usefixtures("server")
+def test_openfisca_server(payload):
     """Test the OpenFisca API serves the /spec endpoint."""
-
     with request.urlopen(**payload) as response:
         data = json.loads(response.read().decode("utf-8"))
-        assert response.status == 200
-        assert data["info"]["title"] == "Openfisca-Country-Template Web API"
+        assert response.status == client.OK
+        assert data["info"]["title"] == "Openfisca-Country_Template Web API"
