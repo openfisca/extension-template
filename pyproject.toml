@@ -96,7 +96,7 @@ python_files = "**/*.py"
 
 [tool.tox]
 requires = [ "tox>=4.19" ]
-env_list = [ "py39", "py310", "py311" ]
+env_list = [ "py39", "py310", "py311", "lint" ]
 
 [tool.tox.env_run_base]
 allowlist_externals = [ "make" ]
@@ -110,3 +110,17 @@ commands_pre = [
     ],
 ]
 commands = [ [ "make", "test" ] ]
+
+[tool.tox.env.lint]
+allowlist_externals = [ "make" ]
+basepython = [ "py39" ]
+commands_pre = [
+    [
+        "pip",
+        "install",
+        "--find-links",
+        "dist",
+        "openfisca_extension_template",
+    ],
+]
+commands = [ [ "make", "lint" ] ]

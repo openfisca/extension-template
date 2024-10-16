@@ -31,5 +31,5 @@ lint: clean
 	black --check `git ls-files | grep "\.py$$"`
 	yamllint `git ls-files | grep "\.yaml$$"`
 
-test: clean lint
+test: clean
 	PYTEST_ADDOPTS="--import-mode importlib" openfisca test --country-package=openfisca_country_template --extensions=openfisca_extension_template openfisca_extension_template/tests

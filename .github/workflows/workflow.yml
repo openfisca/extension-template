@@ -55,21 +55,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Poetry
-        run: pipx install poetry
+      - name: Install Tox
+        run: pipx install tox
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: 3.9.20
-          cache: poetry
-          cache-dependency-path: poetry.lock
 
-      - name: Install dependencies
-        run: make install
+      - name: Restore tests
+        uses: actions/cache@v4
+        with:
+          path: |
+            Makefile
+            openfisca_extension_template/tests
+            poetry.lock
+            tox.ini
+          key: tests-${{ github.sha }}
 
       - name: Lint files
-        run: make lint
+        run: tox -r -e lint
 
   test:
     runs-on: ubuntu-22.04
@@ -93,12 +98,6 @@ jobs:
             poetry.lock
             tox.ini
           key: tests-${{ github.sha }}
-
-      - name: Restore build
-        uses: actions/cache@v4
-        with:
-          path: dist
-          key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
 
       - name: Run the test suite
         run: tox -r -e py39
