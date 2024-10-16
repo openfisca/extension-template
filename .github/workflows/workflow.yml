@@ -22,8 +22,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.9.20
-          cache: poetry
-          cache-dependency-path: poetry.lock
 
       - name: Cache tests
         uses: actions/cache@v4
@@ -32,7 +30,7 @@ jobs:
             Makefile
             openfisca_extension_template/tests
             poetry.lock
-            tox.ini
+            pyproject.toml
           key: tests-${{ github.sha }}
 
       - name: Cache build
@@ -54,37 +52,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Poetry
-        run: pipx install poetry
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.9.20
-          cache: poetry
-          cache-dependency-path: poetry.lock
-
-      - name: Restore tests
-        uses: actions/cache@v4
-        with:
-          path: |
-            Makefile
-            openfisca_extension_template/tests
-            poetry.lock
-            tox.ini
-          key: tests-${{ github.sha }}
-
-      - name: Install for development
-        run: make install
-
-      - name: Lint files
-        run: make lint
-
-  test:
-    runs-on: ubuntu-22.04
-    needs: [build]
-
-    steps:
       - name: Install Tox
         run: pipx install tox
 
@@ -100,15 +67,73 @@ jobs:
             Makefile
             openfisca_extension_template/tests
             poetry.lock
-            tox.ini
+            pyproject.toml
           key: tests-${{ github.sha }}
 
-      - name: Run the test suite
+      - name: Lint files
+        run: tox -r -e lint
+
+  test:
+    runs-on: ubuntu-24.04
+    needs: [build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Tox
+        run: pipx install tox
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9.20
+
+      - name: Restore tests
+        uses: actions/cache@v4
+        with:
+          path: |
+            Makefile
+            openfisca_extension_template/tests
+            poetry.lock
+            pyproject.toml
+          key: tests-${{ github.sha }}
+
+      - name: Lint files
         run: tox -r -e py39
+
+  dist:
+    runs-on: ubuntu-24.04
+    needs: [build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Tox
+        run: pipx install tox
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9.20
+
+      - name: Restore tests
+        uses: actions/cache@v4
+        with:
+          path: |
+            Makefile
+            openfisca_extension_template/tests
+            poetry.lock
+            pyproject.toml
+          key: tests-${{ github.sha }}
+
+      - name: Lint files
+        run: tox -r -e dist
 
   check-version-and-changelog:
     runs-on: ubuntu-22.04
-    needs: [lint, test] # Last job to run
+    needs: [lint, test, dist] # Last job to run
 
     steps:
       - uses: actions/checkout@v4

@@ -29,14 +29,15 @@ packages = [ { include = "openfisca_extension_template", from = "." } ]
 [tool.poetry.dependencies]
 python = "~3.9 || ~3.10 || ~3.11"
 openfisca_country_template = ">=7"
+black = { version = "^24.8.0", optional = true }
+isort = { version = "^5.13.2", optional = true }
+pyproject-fmt = { version = "^2.3.1", optional = true }
+ruff = { version = "^0.6.9", optional = true }
+ruff-lsp = { version = "^0.0.57", optional = true }
+yamllint = { version = "^1.35.1", optional = true }
 
-[tool.poetry.group.dev.dependencies]
-black = "^24.8.0"
-isort = "^5.13.2"
-ruff = "^0.6.9"
-ruff-lsp = "^0.0.57"
-pyproject-fmt = "^2.3.1"
-yamllint = "^1.35.1"
+[tool.poetry.extras]
+dev = [ "black", "isort", "pyproject-fmt", "ruff", "ruff-lsp", "yamllint" ]
 
 [tool.black]
 target_version = [ "py39", "py310", "py311" ]
@@ -95,8 +96,8 @@ testpaths = [ "openfisca_extension_template/tests" ]
 python_files = "**/*.py"
 
 [tool.tox]
-requires = [ "tox>=4.19" ]
-env_list = [ "py39", "py310", "py311", "lint" ]
+requires = [ "tox>=4.20" ]
+env_list = [ "py39", "py310", "py311", "lint", "dist" ]
 
 [tool.tox.env_run_base]
 allowlist_externals = [ "make" ]
@@ -106,13 +107,27 @@ commands_pre = [
         "pip",
         "install",
         "--find-links",
-        "dist",
+        ".",
         "openfisca_extension_template",
     ],
 ]
 
 [tool.tox.env.lint]
-allowlist_externals = [ "make", "poetry" ]
+allowlist_externals = [ "make" ]
 basepython = [ "py39" ]
 commands = [ [ "make", "lint" ] ]
-commands_pre = [ [ "make", "install" ] ]
+commands_pre = [
+    [
+        "pip",
+        "install",
+        "--find-links",
+        ".",
+        "openfisca_extension_template[dev]",
+    ],
+]
+
+[tool.tox.env.dist]
+basepython = [ "py39" ]
+commands = [ [ "twine", "check", "dist/*" ] ]
+commands_pre = [ [ "poetry", "build" ] ]
+deps = [ "poetry", "twine" ]

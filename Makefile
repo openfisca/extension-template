@@ -13,22 +13,22 @@ install:
 	@# The editable version of OpenFisca-Extension-Template allows contributors
 	@# to test as they code.
 	pip install --upgrade pip
-	poetry install --with dev
+	poetry install --all-extras --sync
 
 format:
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	ruff format `git ls-files | grep "\.py$$"`
-	isort `git ls-files | grep "\.py$$"`
 	black `git ls-files | grep "\.py$$"`
+	isort `git ls-files | grep "\.py$$"`
 	pyproject-fmt pyproject.toml
+	ruff format `git ls-files | grep "\.py$$"`
 
 lint: clean
 	@# Do not analyse .gitignored files.
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
-	ruff check `git ls-files | grep "\.py$$"`
-	isort --check `git ls-files | grep "\.py$$"`
 	black --check `git ls-files | grep "\.py$$"`
+	isort --check `git ls-files | grep "\.py$$"`
+	ruff check `git ls-files | grep "\.py$$"`
 	yamllint `git ls-files | grep "\.yaml$$"`
 
 test: clean
