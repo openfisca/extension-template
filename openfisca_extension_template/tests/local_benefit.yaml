@@ -1,4 +1,3 @@
----
 - name: A couple with 2 children gets 200€
   period: 2016-01
   input:
