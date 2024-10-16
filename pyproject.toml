@@ -95,7 +95,6 @@ testpaths = [ "openfisca_extension_template/tests" ]
 python_files = "**/*.py"
 
 [tool.tox]
-isolated_build = true
 requires = [ "tox>=4.19" ]
 env_list = [ "py39", "py310", "py311", "lint" ]
 
@@ -116,4 +115,4 @@ commands_pre = [
 allowlist_externals = [ "make", "poetry" ]
 basepython = [ "py39" ]
 commands = [ [ "make", "lint" ] ]
-commands_pre = [ [ "poetry", "install", "--sync" ] ]
+commands_pre = [ [ "make", "install" ] ]
