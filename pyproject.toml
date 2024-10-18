@@ -45,9 +45,6 @@ dev = [ "codespell", "isort", "ruff", "ruff-lsp", "yamllint" ]
 md = [ "mdformat-footnote", "mdformat-frontmatter", "mdformat-gfm", "mdformat-gfm-alerts" ]
 ci = [ "twine" ]
 
-[tool.black]
-target_version = [ "py39", "py310", "py311" ]
-
 [tool.ruff]
 target-version = "py39"
 format.docstring-code-line-length = 72
