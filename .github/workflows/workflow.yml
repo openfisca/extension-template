@@ -158,7 +158,8 @@ jobs:
   check-for-functional-changes:
     runs-on: ubuntu-22.04
     needs: [check-version-and-changelog]
-    if: github.ref == 'refs/heads/master' # Only triggered for the `master` branch
+    # Only triggered for the `master` branch
+    if: github.ref == 'refs/heads/master'
 
     outputs:
       status: ${{ steps.stop-early.outputs.status }}
@@ -169,7 +170,10 @@ jobs:
           fetch-depth: 0 # Fetch all the tags
 
       - id: stop-early
-        run: if "./.github/has-functional-changes.sh" ; then echo "::set-output name=status::success" ; fi
+        run: |
+          if "./.github/has-functional-changes.sh" ; then
+            echo "::set-output name=status::success"
+          fi
 
   deploy:
     runs-on: ubuntu-22.04

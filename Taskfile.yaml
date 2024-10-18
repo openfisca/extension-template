@@ -1,0 +1,139 @@
+version: '3'
+run: once
+
+vars:
+  VERSION:
+    sh: poetry version --short
+  PYTHON:
+    sh: git ls-files "*.py"
+  YAML:
+    sh: git ls-files "*.yaml" "*.yml"
+  TEST:
+    sh: git ls-files "tests/*.yaml"
+  MD:
+    sh: git ls-files "*.md"
+  SH:
+    sh: git ls-files "*.sh"
+
+tasks:
+  default:
+    aliases: [all]
+    deps:
+      - task: clean
+      - task: lint
+      - task: test
+
+  uninstall:
+    desc: Uninstall this library and all of its dependencies.
+    cmds:
+      - poetry env remove --all
+      - pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
+
+  install:
+    desc: Install this library and all of its dependencies.
+    cmds:
+      - poetry install --all-extras --sync
+
+  build:
+    desc: Build the library.
+    deps:
+      - task: clean
+    cmds:
+      - poetry build
+
+  install-build:
+    desc: Install the library from the distribution file.
+    cmds:
+      - pip install --find-links . openfisca_extension_template
+
+  install-build-dev:
+    desc: Install the library from the distribution file with dev extras.
+    cmds:
+      - pip install --find-links . openfisca_extension_template[dev]
+
+  clean:
+    desc: Remove all of the build files.
+    cmds:
+      - rm -rf build dist
+      - find . -name "*.pyc" -exec rm \{\} \;
+      - find . -type d -name "__pycache__" -exec rm -r {} +
+
+  format:
+    desc: Format the code using different formatters.
+    vars:
+      PYTHON:
+        ref: .PYTHON | splitLines | join " "
+      YAML:
+        ref: .YAML | splitLines | join " "
+      MD:
+        ref: .MD | splitLines | join " "
+    deps:
+      - task: clean
+    cmds:
+      - poetry run codespell --write-changes {{.PYTHON}} {{.YAML}} {{.MD}}
+      - poetry run isort {{.PYTHON}}
+      - poetry run ruff format {{.PYTHON}}
+      - poetry run mdformat --wrap 79 --number {{.MD}}
+
+  lint:
+    desc: Lint the code using different linters.
+    vars:
+      PYTHON:
+        ref: .PYTHON | splitLines | join " "
+      YAML:
+        ref: .YAML | splitLines | join " "
+      MD:
+        ref: .MD | splitLines | join " "
+    deps:
+      - task: clean
+    cmds:
+      - poetry run codespell {{.PYTHON}} {{.YAML}} {{.MD}}
+      - poetry run isort --check {{.PYTHON}}
+      - poetry run ruff check {{.PYTHON}}
+      - poetry run yamllint --strict {{.YAML}}
+      - poetry run mdformat --wrap 79 --number --check {{.MD}}
+
+  test:
+    desc: Test the library.
+    deps:
+      - task: clean
+    env:
+      PYTEST_ADDOPTS: --quiet
+    vars:
+      TEST:
+        ref: .TEST | splitLines | join " "
+    cmds:
+      - |
+        poetry run openfisca test {{.TEST}} \
+          --country-package=openfisca_country_template \
+          --extensions=openfisca_extension_template
+
+  check-build:
+    desc: Check if the build is ok.
+    deps:
+      - task: clean
+      - task: build
+    cmds:
+      - poetry run twine check dist/*
+      - defer: rm -rf build dist
+
+  check-version:
+    desc: Check if the version is acceptable.
+    cmds:
+      - ./.github/is-version-number-acceptable.sh
+
+  check-changes:
+    desc: Check for functional changes.
+    cmds:
+      - ./.github/has-functional-changes.sh
+
+  release:
+    desc: Publish the library to PyPI.
+    cmds:
+      - poetry publish --username $PYPI_USERNAME --password $PYPI_PASSWORD
+
+  tag:
+    desc: Update and push the version tag.
+    cmds:
+      - git tag ${{VERSION}}
+      - git push --tags

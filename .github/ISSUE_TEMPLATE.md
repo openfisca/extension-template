@@ -4,16 +4,11 @@ I really enjoy OpenFisca, but I recently encountered an issue.
 
 ### Here is what I did:
 
-
 ### Here is what I expected to happen:
-
 
 ### Here is what actually happened:
 
-
 ### Here is data (or links to it) that can help you reproduce this issue:
-
-
 
 ## Context
 
@@ -27,4 +22,5 @@ I identify more as a:
 - Lobbyist _(I model reforms to make them exist)_.
 - Producer _(I make computations on individual situations)_.
 
-(remove this line as well as all items in the list that don't fit your situation)
+(remove this line as well as all items in the list that don't fit your
+situation)
