@@ -3,7 +3,7 @@ build-backend = "poetry.core.masonry.api"
 requires = [ "poetry-core>=1.7", "setuptools>=61" ]
 
 [tool.poetry]
-name = "openfisca_extension_template"
+name = "openfisca-extension_template"
 version = "2.0.0"
 description = "An OpenFisca extension that adds some variables to an already-existing tax and benefit system."
 license = "AGPL-3.0-only"
@@ -28,10 +28,8 @@ packages = [ { include = "openfisca_extension_template", from = "." } ]
 
 [tool.poetry.dependencies]
 python = "~3.9 || ~3.10 || ~3.11"
-openfisca_country_template = ">=7"
-black = { version = "^24.8.0", optional = true }
+openfisca-country_template = ">=7"
 isort = { version = "^5.13.2", optional = true }
-pyproject-fmt = { version = "^2.3.1", optional = true }
 ruff = { version = "^0.6.9", optional = true }
 ruff-lsp = { version = "^0.0.57", optional = true }
 yamllint = { version = "^1.35.1", optional = true }
@@ -86,10 +84,6 @@ sections = [
     "LOCALFOLDER",
 ]
 
-[tool.pyproject-fmt]
-column_width = 79
-indent = 4
-
 [tool.pytest.ini_options]
 addopts = "--exitfirst --showlocals --doctest-modules --disable-warnings"
 testpaths = [ "openfisca_extension_template/tests" ]
@@ -108,7 +102,7 @@ commands_pre = [
         "install",
         "--find-links",
         ".",
-        "openfisca_extension_template",
+        "openfisca-extension_template",
     ],
 ]
 
@@ -122,7 +116,7 @@ commands_pre = [
         "install",
         "--find-links",
         ".",
-        "openfisca_extension_template[dev]",
+        "openfisca-extension_template[dev]",
     ],
 ]
 

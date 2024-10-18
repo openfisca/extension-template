@@ -70,4 +70,4 @@ def test_openfisca_server(payload):
     with request.urlopen(**payload) as response:
         data = json.loads(response.read().decode("utf-8"))
         assert response.status == client.OK
-        assert data["info"]["title"] == "Openfisca-Country_Template Web API"
+        assert data["info"]["title"] == "Openfisca-Country-Template Web API"

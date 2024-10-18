@@ -128,7 +128,7 @@ jobs:
             pyproject.toml
           key: tests-${{ github.sha }}
 
-      - name: Lint files
+      - name: Check built package
         run: tox -r -e dist
 
   check-version-and-changelog:
