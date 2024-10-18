@@ -102,8 +102,15 @@ requires = [ "tox>=4.20" ]
 env_list = [ "py39", "py310", "py311", "dist" ]
 
 [tool.tox.env_run_base]
-commands = [ [ "openfisca", "test", "--country-package=openfisca_country_template",
-    "--extensions=openfisca_extension_template", "openfisca_extension_template/tests" ] ]
+commands = [
+    [
+        "openfisca",
+        "test",
+        "--country-package=openfisca_country_template",
+        "--extensions=openfisca_extension_template",
+        "openfisca_extension_template/tests",
+    ]
+]
 commands_pre = [
     [
         "pip",
