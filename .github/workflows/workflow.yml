@@ -15,14 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Poetry
-        run: pipx install poetry
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.9.20
-
       - name: Cache tests
         uses: actions/cache@v4
         with:
@@ -40,6 +32,18 @@ jobs:
           path: dist
           key: build-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
 
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9.20
+          cache: 'poetry'
+
+      - name: Install dependencies
+        run: make install
+
       - name: Build package
         if: steps.cache-build.outputs.cache-hit != 'true'
         run: poetry build
@@ -52,14 +56,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Tox
-        run: pipx install tox
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.9.20
-
       - name: Restore tests
         uses: actions/cache@v4
         with:
@@ -70,8 +66,17 @@ jobs:
             pyproject.toml
           key: tests-${{ github.sha }}
 
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9.20
+          cache: 'poetry'
+
       - name: Lint files
-        run: tox -r -e lint
+        run: make lint
 
   test:
     runs-on: ubuntu-24.04
@@ -81,14 +86,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Tox
-        run: pipx install tox
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.9.20
-
       - name: Restore tests
         uses: actions/cache@v4
         with:
@@ -99,7 +96,15 @@ jobs:
             pyproject.toml
           key: tests-${{ github.sha }}
 
-      - name: Lint files
+      - name: Install Tox
+        run: pipx install tox
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9.20
+
+      - name: Test files
         run: tox -r -e py39
 
   dist:
@@ -110,14 +115,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Tox
-        run: pipx install tox
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.9.20
-
       - name: Restore tests
         uses: actions/cache@v4
         with:
@@ -127,6 +124,14 @@ jobs:
             poetry.lock
             pyproject.toml
           key: tests-${{ github.sha }}
+
+      - name: Install Tox
+        run: pipx install tox
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9.20
 
       - name: Check built package
         run: tox -r -e dist

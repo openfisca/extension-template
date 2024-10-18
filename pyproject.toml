@@ -85,17 +85,17 @@ sections = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "--exitfirst --showlocals --doctest-modules --disable-warnings"
+addopts = "--exitfirst --showlocals --doctest-modules --disable-warnings --import-mode importlib"
 testpaths = [ "openfisca_extension_template/tests" ]
 python_files = "**/*.py"
 
 [tool.tox]
 requires = [ "tox>=4.20" ]
-env_list = [ "py39", "py310", "py311", "lint", "dist" ]
+env_list = [ "py39", "py310", "py311", "dist" ]
 
 [tool.tox.env_run_base]
-allowlist_externals = [ "make" ]
-commands = [ [ "make", "test" ] ]
+commands = [ [ "openfisca", "test", "--country-package=openfisca_country_template",
+    "--extensions=openfisca_extension_template", "openfisca_extension_template/tests" ] ]
 commands_pre = [
     [
         "pip",
@@ -103,20 +103,6 @@ commands_pre = [
         "--find-links",
         ".",
         "openfisca-extension_template",
-    ],
-]
-
-[tool.tox.env.lint]
-allowlist_externals = [ "make" ]
-basepython = [ "py39" ]
-commands = [ [ "make", "lint" ] ]
-commands_pre = [
-    [
-        "pip",
-        "install",
-        "--find-links",
-        ".",
-        "openfisca-extension_template[dev]",
     ],
 ]
 

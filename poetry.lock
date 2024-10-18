@@ -20,52 +20,6 @@ tests = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4
 tests-mypy = ["mypy (>=1.11.1)", "pytest-mypy-plugins"]
 
 [[package]]
-name = "black"
-version = "24.10.0"
-description = "The uncompromising code formatter."
-optional = true
-python-versions = ">=3.9"
-files = [
-    {file = "black-24.10.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:e6668650ea4b685440857138e5fe40cde4d652633b1bdffc62933d0db4ed9812"},
-    {file = "black-24.10.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:1c536fcf674217e87b8cc3657b81809d3c085d7bf3ef262ead700da345bfa6ea"},
-    {file = "black-24.10.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:649fff99a20bd06c6f727d2a27f401331dc0cc861fb69cde910fe95b01b5928f"},
-    {file = "black-24.10.0-cp310-cp310-win_amd64.whl", hash = "sha256:fe4d6476887de70546212c99ac9bd803d90b42fc4767f058a0baa895013fbb3e"},
-    {file = "black-24.10.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:5a2221696a8224e335c28816a9d331a6c2ae15a2ee34ec857dcf3e45dbfa99ad"},
-    {file = "black-24.10.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:f9da3333530dbcecc1be13e69c250ed8dfa67f43c4005fb537bb426e19200d50"},
-    {file = "black-24.10.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:4007b1393d902b48b36958a216c20c4482f601569d19ed1df294a496eb366392"},
-    {file = "black-24.10.0-cp311-cp311-win_amd64.whl", hash = "sha256:394d4ddc64782e51153eadcaaca95144ac4c35e27ef9b0a42e121ae7e57a9175"},
-    {file = "black-24.10.0-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:b5e39e0fae001df40f95bd8cc36b9165c5e2ea88900167bddf258bacef9bbdc3"},
-    {file = "black-24.10.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:d37d422772111794b26757c5b55a3eade028aa3fde43121ab7b673d050949d65"},
-    {file = "black-24.10.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:14b3502784f09ce2443830e3133dacf2c0110d45191ed470ecb04d0f5f6fcb0f"},
-    {file = "black-24.10.0-cp312-cp312-win_amd64.whl", hash = "sha256:30d2c30dc5139211dda799758559d1b049f7f14c580c409d6ad925b74a4208a8"},
-    {file = "black-24.10.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:1cbacacb19e922a1d75ef2b6ccaefcd6e93a2c05ede32f06a21386a04cedb981"},
-    {file = "black-24.10.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:1f93102e0c5bb3907451063e08b9876dbeac810e7da5a8bfb7aeb5a9ef89066b"},
-    {file = "black-24.10.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:ddacb691cdcdf77b96f549cf9591701d8db36b2f19519373d60d31746068dbf2"},
-    {file = "black-24.10.0-cp313-cp313-win_amd64.whl", hash = "sha256:680359d932801c76d2e9c9068d05c6b107f2584b2a5b88831c83962eb9984c1b"},
-    {file = "black-24.10.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:17374989640fbca88b6a448129cd1745c5eb8d9547b464f281b251dd00155ccd"},
-    {file = "black-24.10.0-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:63f626344343083322233f175aaf372d326de8436f5928c042639a4afbbf1d3f"},
-    {file = "black-24.10.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:ccfa1d0cb6200857f1923b602f978386a3a2758a65b52e0950299ea014be6800"},
-    {file = "black-24.10.0-cp39-cp39-win_amd64.whl", hash = "sha256:2cd9c95431d94adc56600710f8813ee27eea544dd118d45896bb734e9d7a0dc7"},
-    {file = "black-24.10.0-py3-none-any.whl", hash = "sha256:3bb2b7a1f7b685f85b11fed1ef10f8a9148bceb49853e47a294a3dd963c1dd7d"},
-    {file = "black-24.10.0.tar.gz", hash = "sha256:846ea64c97afe3bc677b761787993be4991810ecc7a4a937816dd6bddedc4875"},
-]
-
-[package.dependencies]
-click = ">=8.0.0"
-mypy-extensions = ">=0.4.3"
-packaging = ">=22.0"
-pathspec = ">=0.9.0"
-platformdirs = ">=2"
-tomli = {version = ">=1.1.0", markers = "python_version < \"3.11\""}
-typing-extensions = {version = ">=4.0.1", markers = "python_version < \"3.11\""}
-
-[package.extras]
-colorama = ["colorama (>=0.4.3)"]
-d = ["aiohttp (>=3.10)"]
-jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
-uvloop = ["uvloop (>=0.15.2)"]
-
-[[package]]
 name = "blinker"
 version = "1.8.2"
 description = "Fast, simple object-to-object and broadcast signaling"
@@ -372,17 +326,6 @@ files = [
 ]
 
 [[package]]
-name = "mypy-extensions"
-version = "1.0.0"
-description = "Type system extensions for programs checked with the mypy type checker."
-optional = true
-python-versions = ">=3.5"
-files = [
-    {file = "mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d"},
-    {file = "mypy_extensions-1.0.0.tar.gz", hash = "sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782"},
-]
-
-[[package]]
 name = "numexpr"
 version = "2.10.1"
 description = "Fast numerical expression evaluator for NumPy"
@@ -470,13 +413,13 @@ files = [
 
 [[package]]
 name = "openfisca-core"
-version = "42.0.7"
+version = "43.2.0"
 description = "A versatile microsimulation free software"
 optional = false
 python-versions = "*"
 files = [
-    {file = "OpenFisca_Core-42.0.7-py3-none-any.whl", hash = "sha256:c1e419b02a06125866ed094bb86036bf3a012e761429c6a9ae68945a755bcacf"},
-    {file = "openfisca_core-42.0.7.tar.gz", hash = "sha256:9d10bd5fdaf2f8f68ed5dd5a3f1ff4404ec64aff3294249f8a2ea4cbe3dd28a5"},
+    {file = "OpenFisca_Core-43.2.0-py3-none-any.whl", hash = "sha256:989222caa8a95a1cd9ac1a1d274cc3821761d0358133090928513fac7b9eecae"},
+    {file = "openfisca_core-43.2.0.tar.gz", hash = "sha256:f98d625f1278e7ca8b6bd4bd3c5a1e79f184cdc05b047243444d3c9c46a7e756"},
 ]
 
 [package.dependencies]
@@ -484,7 +427,7 @@ dpath = ">=2.1.4,<3.0"
 Flask = {version = ">=2.2.3,<3.0", optional = true, markers = "extra == \"web-api\""}
 Flask-Cors = {version = ">=3.0.10,<4.0", optional = true, markers = "extra == \"web-api\""}
 gunicorn = {version = ">=21.0,<22.0", optional = true, markers = "extra == \"web-api\""}
-numexpr = ">=2.8.4,<3.0"
+numexpr = ">=2.10.1,<3.0"
 numpy = ">=1.24.2,<2.0"
 pendulum = ">=3.0.0,<4.0.0"
 psutil = ">=5.9.4,<6.0"
@@ -497,26 +440,26 @@ Werkzeug = {version = ">=2.2.3,<3.0", optional = true, markers = "extra == \"web
 
 [package.extras]
 ci = ["build (>=0.10.0,<0.11.0)", "coveralls (>=4.0.1,<5.0)", "twine (>=5.1.1,<6.0)", "wheel (>=0.40.0,<0.41.0)"]
-dev = ["Flask (>=2.2.3,<3.0)", "Flask-Cors (>=3.0.10,<4.0)", "Werkzeug (>=2.2.3,<3.0)", "black (>=24.8.0,<25.0)", "coverage (>=7.6.1,<8.0)", "darglint (>=1.8.1,<2.0)", "flake8 (>=7.1.1,<8.0.0)", "flake8-bugbear (>=24.8.19,<25.0)", "flake8-docstrings (>=1.7.0,<2.0)", "flake8-print (>=5.0.0,<6.0)", "flake8-rst-docstrings (>=0.3.0,<0.4.0)", "gunicorn (>=21.0,<22.0)", "idna (>=3.10,<4.0)", "isort (>=5.13.2,<6.0)", "mypy (>=1.11.2,<2.0)", "openapi-spec-validator (>=0.7.1,<0.8.0)", "pylint (>=3.3.1,<4.0)", "pylint-per-file-ignores (>=1.3.2,<2.0)", "pyright (>=1.1.382,<2.0)", "ruff (>=0.6.7,<1.0)", "ruff-lsp (>=0.0.57,<1.0)", "xdoctest (>=1.2.0,<2.0)"]
+dev = ["Flask (>=2.2.3,<3.0)", "Flask-Cors (>=3.0.10,<4.0)", "Werkzeug (>=2.2.3,<3.0)", "black (>=24.8.0,<25.0)", "codespell (>=2.3.0,<3.0)", "coverage (>=7.6.1,<8.0)", "darglint (>=1.8.1,<2.0)", "flake8 (>=7.1.1,<8.0.0)", "flake8-bugbear (>=24.8.19,<25.0)", "flake8-docstrings (>=1.7.0,<2.0)", "flake8-print (>=5.0.0,<6.0)", "flake8-rst-docstrings (>=0.3.0,<0.4.0)", "gunicorn (>=21.0,<22.0)", "idna (>=3.10,<4.0)", "isort (>=5.13.2,<6.0)", "mypy (>=1.11.2,<2.0)", "openapi-spec-validator (>=0.7.1,<0.8.0)", "pylint (>=3.3.1,<4.0)", "pylint-per-file-ignores (>=1.3.2,<2.0)", "pyright (>=1.1.382,<2.0)", "ruff (>=0.6.9,<1.0)", "ruff-lsp (>=0.0.57,<1.0)"]
 tracker = ["OpenFisca-Tracker (>=0.4.0,<0.5.0)"]
 web-api = ["Flask (>=2.2.3,<3.0)", "Flask-Cors (>=3.0.10,<4.0)", "Werkzeug (>=2.2.3,<3.0)", "gunicorn (>=21.0,<22.0)"]
 
 [[package]]
 name = "openfisca-country-template"
-version = "7.1.5"
+version = "7.1.7"
 description = "OpenFisca Rules as Code model for Country-Template."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "openfisca_country_template-7.1.5-py3-none-any.whl", hash = "sha256:75a86bb794a2ee771c6f5d2837cbc89154a86047e06ab3896efce38fafebdd21"},
-    {file = "openfisca_country_template-7.1.5.tar.gz", hash = "sha256:b2f2ac9945d9ccad467aed0925bd82f7f4d5ce4e96b212324cd071b8bee46914"},
+    {file = "openfisca_country_template-7.1.7-py3-none-any.whl", hash = "sha256:1aa904e4b465e385c7c17bf6a468de7cb0e36d3e0be0e82e0d60e43c94d44027"},
+    {file = "openfisca_country_template-7.1.7.tar.gz", hash = "sha256:824674dd7282eec733a5ada751205458f7aea4ababcc8525eef739a3a06a5fdb"},
 ]
 
 [package.dependencies]
-openfisca-core = {version = ">=42.0.0,<43.0.0", extras = ["web-api"]}
+openfisca-core = {version = ">=43", extras = ["web-api"]}
 
 [package.extras]
-dev = ["autopep8 (>=2.0.4)", "flake8 (>=7.0.0)", "isort (>=5.13.2)", "pylint (>=3.1.0)", "pyupgrade (>=3.15.1)", "yamllint (>=1.35.1)"]
+dev = ["isort (>=5.13.2,<6)", "pyproject-fmt (>=2.3.1,<3)", "ruff (>=0.6.9,<1)", "ruff-lsp (>=0.0.57,<1)", "yamllint (>=1.35.1)"]
 
 [[package]]
 name = "packaging"
@@ -640,22 +583,6 @@ tzdata = ">=2020.1"
 test = ["time-machine (>=2.6.0)"]
 
 [[package]]
-name = "platformdirs"
-version = "4.3.6"
-description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
-optional = true
-python-versions = ">=3.8"
-files = [
-    {file = "platformdirs-4.3.6-py3-none-any.whl", hash = "sha256:73e575e1408ab8103900836b97580d5307456908a03e92031bab39e4554cc3fb"},
-    {file = "platformdirs-4.3.6.tar.gz", hash = "sha256:357fb2acbc885b0419afd3ce3ed34564c13c9b95c89360cd9563f73aa5e2b907"},
-]
-
-[package.extras]
-docs = ["furo (>=2024.8.6)", "proselint (>=0.14)", "sphinx (>=8.0.2)", "sphinx-autodoc-typehints (>=2.4)"]
-test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=8.3.2)", "pytest-cov (>=5)", "pytest-mock (>=3.14)"]
-type = ["mypy (>=1.11.2)"]
-
-[[package]]
 name = "pluggy"
 version = "1.5.0"
 description = "plugin and hook calling mechanisms for python"
@@ -715,59 +642,6 @@ lsprotocol = "2023.0.1"
 
 [package.extras]
 ws = ["websockets (>=11.0.3)"]
-
-[[package]]
-name = "pyproject-fmt"
-version = "2.3.1"
-description = "Format your pyproject.toml file"
-optional = true
-python-versions = ">=3.9"
-files = [
-    {file = "pyproject_fmt-2.3.1-py3-none-any.whl", hash = "sha256:0210b2db8183ab58b9140a932c078240648d6087feb0b08eb0e56ef5569a967e"},
-    {file = "pyproject_fmt-2.3.1.tar.gz", hash = "sha256:e9b7135ae6194b671d807abd5247d80d21f93cc1b70c5d11fb45ad2fb79e83aa"},
-]
-
-[package.dependencies]
-pyproject-fmt-rust = "1.2.1"
-tomli = {version = ">=2.0.2", markers = "python_version < \"3.11\""}
-
-[package.extras]
-docs = ["furo (>=2024.8.6)", "sphinx (>=8.0.2)", "sphinx-argparse-cli (>=1.18.2)", "sphinx-autodoc-typehints (>=2.4.4)", "sphinx-copybutton (>=0.5.2)"]
-test = ["covdefaults (>=2.3)", "pytest (>=8.3.3)", "pytest-cov (>=5)", "pytest-mock (>=3.14)"]
-
-[[package]]
-name = "pyproject-fmt-rust"
-version = "1.2.1"
-description = "Format your pyproject.toml file"
-optional = true
-python-versions = ">=3.9"
-files = [
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:f7ae99e1b4a4455e52fbb9c877eb928be253fb698bbc9999468e85d43ef747b9"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:ef137dcbf7f1e0360a61bf4e66f4dab0cc365db8d062a5d58725e733ecdd6ab6"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6b2eab486b007ce74f0986287057cc71e385a41472d1f29362d9569062656f5e"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:8faa8c42bbc947208f407083dff639bac6ec7c4ddc8a3978d4a77894e0657ad1"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:08e712937cd2fed075c0ab37004b31373e5c3013131184a60c66a11d12ee5798"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:a939ffcf2375df50093581128aff6e2abcb8d2066c0c14f29fcea37b50560d96"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:79787b7a4d97355c52a1476a16d095129a2993429d4a8e017572023ffb122f35"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:2c2039908f429f5d8433bf1833bf7f8b58b4c90bf2d2a12a43a7aa57a8c08559"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-musllinux_1_1_i686.whl", hash = "sha256:da7856507f7362b74583db82b68ef9cddad546147b2a03a50e0fd580cf5d28f5"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:66b47f5ff3c72514b1fd2938814b5f40169791c565a062cbb050f4c348eee839"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-win32.whl", hash = "sha256:187bcd79cd835d117a2d34cca02f9732a3bb562269eada747e95b411e6030960"},
-    {file = "pyproject_fmt_rust-1.2.1-cp38-abi3-win_amd64.whl", hash = "sha256:f44744c79b1a3d652f95161c8a5389102c77da5058b21ecde8720936ee25f3d3"},
-    {file = "pyproject_fmt_rust-1.2.1-pp310-pypy310_pp73-macosx_10_12_x86_64.whl", hash = "sha256:f0057cfa89dfe6bda20511ae8e786f5a6f3ba54d60e4cb2c060987d3d0856bf4"},
-    {file = "pyproject_fmt_rust-1.2.1-pp310-pypy310_pp73-macosx_11_0_arm64.whl", hash = "sha256:12df1a5756e39af2aa55383ffb6cd52a11eef3bbb27e216cdf0ae7410c987a65"},
-    {file = "pyproject_fmt_rust-1.2.1-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:30d7b5191a467cc645e9d80d3037e3e1a4e1f2d70b9186c5006b59c38ba90b21"},
-    {file = "pyproject_fmt_rust-1.2.1-pp38-pypy38_pp73-macosx_10_12_x86_64.whl", hash = "sha256:9bdca7e7fd4c4dca70bc3b1b6042da25c01a09d01513ef105e2bcc464b059a4c"},
-    {file = "pyproject_fmt_rust-1.2.1-pp38-pypy38_pp73-macosx_11_0_arm64.whl", hash = "sha256:1e5dc6904bcc32f060eedf509588b3176d8115f2e0d5a39106a11d59e2ef1b35"},
-    {file = "pyproject_fmt_rust-1.2.1-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:43db19b40c366304aee87161df742444fdf1f5450b1bde925bd7393e36b5a9a1"},
-    {file = "pyproject_fmt_rust-1.2.1-pp39-pypy39_pp73-macosx_10_12_x86_64.whl", hash = "sha256:07788881deb005462094fc8a095cf8b0d264ca6bbf2eb2e599a914ec17cf3059"},
-    {file = "pyproject_fmt_rust-1.2.1-pp39-pypy39_pp73-macosx_11_0_arm64.whl", hash = "sha256:3baf4364d1dcc68dee67edad708d3d4252db5dc437e7a71c17b555d4a4bf4bfe"},
-    {file = "pyproject_fmt_rust-1.2.1-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0a323dbcf804ad652adea22b889559247236a93af20dfd8e1240bbad69defee2"},
-    {file = "pyproject_fmt_rust-1.2.1.tar.gz", hash = "sha256:ff4b41f35a1e571ae07a890269c716c202c4d832a427ad2ef488527b55a20fe2"},
-]
-
-[package.extras]
-test = ["covdefaults (>=2.3)", "pytest (>=8.3.2)", "pytest-cov (>=5)"]
 
 [[package]]
 name = "pytest"
@@ -1041,9 +915,9 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 type = ["pytest-mypy"]
 
 [extras]
-dev = ["black", "isort", "pyproject-fmt", "ruff", "ruff-lsp", "yamllint"]
+dev = ["isort", "ruff", "ruff-lsp", "yamllint"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.9 || ~3.10 || ~3.11"
-content-hash = "423d512978a434e4d485d218444f2bcfb794034739db4d37486815ea6fc9b508"
+content-hash = "f52134204d951f67768d31021f773645b7a6edbcb1e0eb2d295e964d1243557c"
