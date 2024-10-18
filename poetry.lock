@@ -445,21 +445,21 @@ tracker = ["OpenFisca-Tracker (>=0.4.0,<0.5.0)"]
 web-api = ["Flask (>=2.2.3,<3.0)", "Flask-Cors (>=3.0.10,<4.0)", "Werkzeug (>=2.2.3,<3.0)", "gunicorn (>=21.0,<22.0)"]
 
 [[package]]
-name = "openfisca-country-template"
-version = "7.1.7"
+name = "openfisca-country_template"
+version = "7.1.8"
 description = "OpenFisca Rules as Code model for Country-Template."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "openfisca_country_template-7.1.7-py3-none-any.whl", hash = "sha256:1aa904e4b465e385c7c17bf6a468de7cb0e36d3e0be0e82e0d60e43c94d44027"},
-    {file = "openfisca_country_template-7.1.7.tar.gz", hash = "sha256:824674dd7282eec733a5ada751205458f7aea4ababcc8525eef739a3a06a5fdb"},
+    {file = "openfisca_country_template-7.1.8-py3-none-any.whl", hash = "sha256:ee0f4da79d03ed95c41cd85ddffeb8a3913dd4a1a1058d97da246bb0cd7e431b"},
+    {file = "openfisca_country_template-7.1.8.tar.gz", hash = "sha256:a27e1f2cf3ecf96b6ee493e48b695a7e6b23dedaefd0238ac86b3e2d995f2b64"},
 ]
 
 [package.dependencies]
 openfisca-core = {version = ">=43", extras = ["web-api"]}
 
 [package.extras]
-dev = ["isort (>=5.13.2,<6)", "pyproject-fmt (>=2.3.1,<3)", "ruff (>=0.6.9,<1)", "ruff-lsp (>=0.0.57,<1)", "yamllint (>=1.35.1)"]
+dev = ["isort (>=5.13.2,<6)", "ruff (>=0.6.9,<1)", "ruff-lsp (>=0.0.57,<1)", "yamllint (>=1.35.1)"]
 
 [[package]]
 name = "packaging"
@@ -920,4 +920,4 @@ dev = ["isort", "ruff", "ruff-lsp", "yamllint"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.9 || ~3.10 || ~3.11"
-content-hash = "f52134204d951f67768d31021f773645b7a6edbcb1e0eb2d295e964d1243557c"
+content-hash = "c75f5f71d8655c33b6ddd8853f732613336bfc0474f360bbf85ade3b214371b8"
