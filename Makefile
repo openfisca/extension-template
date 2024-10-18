@@ -27,6 +27,7 @@ lint: clean
 	poetry run isort --check `git ls-files | grep "\.py$$"`
 	poetry run ruff check `git ls-files | grep "\.py$$"`
 	poetry run yamllint `git ls-files | grep "\.yaml$$"`
+	poetry run mdformat --wrap 79 --number --check README.md
 
 test: clean
 	poetry run openfisca test --country-package=openfisca_country_template --extensions=openfisca_extension_template openfisca_extension_template/tests
