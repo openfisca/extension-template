@@ -1,20 +1,19 @@
 [build-system]
-requires = ["setuptools >= 61.0"]
-build-backend = "setuptools.build_meta"
+build-backend = "poetry.core.masonry.api"
+requires = [ "poetry-core>=1.7", "setuptools>=61" ]
 
-[project]
+[tool.poetry]
 name = "openfisca-extension_template"
-version = "1.3.15"
-dependencies = [
-    "openfisca-country-template >=7.1.4, <8.0"
-]
-requires-python = ">=3.9"
-authors = [{name = "OpenFisca Team", email = "contact@openfisca.org"}]
-maintainers = [{name = "OpenFisca Team", email = "contact@openfisca.org"}]
+version = "2.0.0"
 description = "An OpenFisca extension that adds some variables to an already-existing tax and benefit system."
+license = "AGPL-3.0-only"
+authors = [ "OpenFisca Team <contact@openfisca.org>" ]
+maintainers = [ "OpenFisca Team <contact@openfisca.org>" ]
 readme = "README.md"
-license = {file = "LICENSE"}
-keywords = ["microsimulation", "tax", "benefit", "rac", "rules-as-code"]
+homepage = "https://openfisca.org"
+repository = "https://github.com/openfisca/extension-template"
+documentation = "https://openfisca.org/doc"
+keywords = [ "microsimulation", "tax", "benefit", "rac", "rules-as-code" ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "License :: OSI Approved :: GNU Affero General Public License v3",
@@ -25,25 +24,48 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Information Analysis",
 ]
+packages = [ { include = "openfisca_extension_template", from = "." } ]
 
-[project.optional-dependencies]
-dev = [
-    "black >=24.8.0, <25.0",
-    "isort >=5.13.2, <6.0",
-    "ruff >=0.6.7, <1.0",
-    "ruff-lsp >=0.0.57, <1.0",
-    "yamllint >=1.35.1"
-]
+[tool.poetry.dependencies]
+python = "~3.9 || ~3.10 || ~3.11"
+openfisca-country_template = ">=7.1.8"
+codespell = { version = "^2.3.0", optional = true }
+isort = { version = "^5.13.2", optional = true }
+mdformat-footnote = { version = "^0.1.1", optional = true }
+mdformat-frontmatter = { version = "^2.0.8", optional = true }
+mdformat-gfm = { version = "^0.3.6", optional = true }
+mdformat-gfm-alerts = { version = "^1.0.1", optional = true }
+ruff = { version = "^0.6.9", optional = true }
+ruff-lsp = { version = "^0.0.57", optional = true }
+twine = { version = "^5.1.1", optional = true }
+yamllint = { version = "^1.35.1", optional = true }
 
-[project.urls]
-Homepage = "https://github.com/openfisca/extension-template"
-Repository = "https://github.com/openfisca/extension-template"
-Documentation = "https://openfisca.org/doc"
-Issues = "https://github.com/openfisca/extension-template/issues"
-Changelog = "https://github.com/openfisca/extension-template/blob/main/CHANGELOG.md"
+[tool.poetry.extras]
+dev = [ "codespell", "isort", "ruff", "ruff-lsp", "yamllint" ]
+md = [ "mdformat-footnote", "mdformat-frontmatter", "mdformat-gfm", "mdformat-gfm-alerts" ]
+ci = [ "twine" ]
 
 [tool.black]
-target_version = ["py39", "py310", "py311"]
+target_version = [ "py39", "py310", "py311" ]
+
+[tool.ruff]
+target-version = "py39"
+format.docstring-code-line-length = 72
+format.docstring-code-format = true
+lint.select = [ "ALL" ]
+lint.ignore = [
+    "ANN",
+    "COM812",
+    "D101",
+    "D104",
+    "ISC001",
+    "N801",
+    "N805",
+    "S101",
+    "S310",
+    "S603",
+]
+lint.pydocstyle.convention = "google"
 
 [tool.isort]
 case_sensitive = true
@@ -52,10 +74,10 @@ force_alphabetical_sort_within_sections = false
 group_by_package = true
 honor_noqa = true
 include_trailing_comma = true
-known_first_party = ["openfisca_extension_template"]
-known_openfisca = ["openfisca_core", "openfisca_country_template"]
-known_typing = ["*collections.abc*", "*typing*", "*typing_extensions*"]
-known_types = ["*types*"]
+known_first_party = [ "openfisca_extension_template" ]
+known_openfisca = [ "openfisca_core", "openfisca_country_template" ]
+known_typing = [ "*collections.abc*", "*typing*", "*typing_extensions*" ]
+known_types = [ "*types*" ]
 multi_line_output = 3
 profile = "black"
 py_version = 39
@@ -71,21 +93,36 @@ sections = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "--exitfirst --showlocals --doctest-modules"
+addopts = "--exitfirst --showlocals --doctest-modules --disable-warnings --import-mode importlib"
 testpaths = [ "openfisca_extension_template/tests" ]
 python_files = "**/*.py"
-filterwarnings = ["ignore::DeprecationWarning"]
 
-[tool.ruff]
-target-version = "py39"
+[tool.tox]
+requires = [ "tox>=4.20" ]
+env_list = [ "py39", "py310", "py311", "dist" ]
 
-[tool.ruff.format]
-docstring-code-format = true
-docstring-code-line-length = 72
+[tool.tox.env_run_base]
+commands = [
+    [
+        "openfisca",
+        "test",
+        "--country-package=openfisca_country_template",
+        "--extensions=openfisca_extension_template",
+        "openfisca_extension_template/tests",
+    ]
+]
+commands_pre = [
+    [
+        "pip",
+        "install",
+        "--find-links",
+        ".",
+        "openfisca-extension_template",
+    ],
+]
 
-[tool.ruff.lint]
-ignore = ["ANN", "COM812", "D101", "D104", "ISC001", "N801", "N805"]
-select = ["ALL"]
-
-[tool.ruff.lint.pydocstyle]
-convention = "google"
+[tool.tox.env.dist]
+basepython = [ "py39" ]
+commands = [ [ "twine", "check", "dist/*" ] ]
+commands_pre = [ [ "poetry", "build" ] ]
+deps = [ "poetry", "twine" ]

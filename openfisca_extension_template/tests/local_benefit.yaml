@@ -1,10 +1,10 @@
-- name: "A couple with 2 children gets 200€"
+- name: A couple with 2 children gets 200€
   period: 2016-01
   input:
     households:
       household:
-        parents: ["parent1", "parent2"]
-        children: ["child1", "child2"]
+        parents: [parent1, parent2]
+        children: [child1, child2]
     persons:
       parent1:
         age: 35
@@ -16,13 +16,12 @@
         age: 4
   output:
     local_town_child_allowance: 200
-
-- name: "A couple with no child gets nothing"
+- name: A couple with no child gets nothing
   period: 2016-01
   input:
     households:
       household:
-        parents: ["parent1", "parent2"]
+        parents: [parent1, parent2]
     persons:
       parent1:
         age: 35
@@ -30,4 +29,3 @@
         age: 35
   output:
     local_town_child_allowance: 0
-

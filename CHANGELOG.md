@@ -1,5 +1,13 @@
 # Changelog
 
+# 2.0.0 - [#54](https://github.com/openfisca/extension-template/pull/54)
+
+* Technical Changes
+* Details:
+  - Run tests in absolute isolation
+    - Uses `poetry` to ensure deterministic builds
+    - Uses `tox` to test builds in isolation
+
 ### 1.3.15 - [#57](https://github.com/openfisca/extension-template/pull/57)
 
 * Crash fix.

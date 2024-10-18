@@ -3,5 +3,6 @@
 *.pyc
 .idea
 .python-version
+.tox
 build
 dist
