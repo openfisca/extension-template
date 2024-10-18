@@ -28,7 +28,7 @@ packages = [ { include = "openfisca_extension_template", from = "." } ]
 
 [tool.poetry.dependencies]
 python = "~3.9 || ~3.10 || ~3.11"
-openfisca-country_template = ">=7"
+openfisca-country_template = ">=7.1.8"
 isort = { version = "^5.13.2", optional = true }
 ruff = { version = "^0.6.9", optional = true }
 ruff-lsp = { version = "^0.0.57", optional = true }
