@@ -38,9 +38,19 @@ make install
 You can make sure that everything is working by running the provided tests:
 
 ```sh
-make lint test
+poetry run make lint test
 ```
 
 > [Learn more about tests](http://openfisca.org/doc/coding-the-legislation/writing_yaml_tests.html).
 
 Your extension package is now installed and ready!
+
+## Removing packages
+
+To clean your environment, run:
+
+```sh
+poetry run make uninstall
+```
+
+This will remove all pip package from current environment and remove all Poetry environment in OpenFisca Extension-Template.
