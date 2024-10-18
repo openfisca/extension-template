@@ -9,7 +9,7 @@ vars:
   YAML:
     sh: git ls-files "*.yaml" "*.yml"
   TEST:
-    sh: git ls-files "openfisca_extension_template/tests/*.yaml"
+    sh: git ls-files "tests/*.yaml"
   MD:
     sh: git ls-files "*.md"
   SH:
