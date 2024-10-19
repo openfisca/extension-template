@@ -8,12 +8,14 @@ vars:
     sh: git ls-files "*.py"
   YAML:
     sh: git ls-files "*.yaml" "*.yml"
-  TEST:
-    sh: git ls-files "tests/*.yaml"
   MD:
     sh: git ls-files "*.md"
   SH:
     sh: git ls-files "*.sh"
+  PY_TEST:
+    sh: git ls-files "tests/*.yaml" "tests/*.yaml"
+  SH_TEST:
+    sh: git ls-files "tests/*.sh"
 
 tasks:
   default:
@@ -67,6 +69,8 @@ tasks:
         ref: .YAML | splitLines | join " "
       MD:
         ref: .MD | splitLines | join " "
+      SH:
+        ref: .SH | splitLines | join " "
     deps:
       - task: clean
     cmds:
@@ -74,6 +78,7 @@ tasks:
       - poetry run isort {{.PYTHON}}
       - poetry run ruff format {{.PYTHON}}
       - poetry run mdformat --wrap 79 --number {{.MD}}
+      - poetry run shfmt --write {{.SH}}
 
   lint:
     desc: Lint the code using different linters.
@@ -84,6 +89,8 @@ tasks:
         ref: .YAML | splitLines | join " "
       MD:
         ref: .MD | splitLines | join " "
+      SH:
+        ref: .SH | splitLines | join " "
     deps:
       - task: clean
     cmds:
@@ -92,21 +99,23 @@ tasks:
       - poetry run ruff check {{.PYTHON}}
       - poetry run yamllint --strict {{.YAML}}
       - poetry run mdformat --wrap 79 --number --check {{.MD}}
+      - poetry run shfmt --list {{.SH}}
 
   test:
     desc: Test the library.
     deps:
       - task: clean
-    env:
-      PYTEST_ADDOPTS: --quiet
     vars:
-      TEST:
-        ref: .TEST | splitLines | join " "
+      PY_TEST:
+        ref: .PY_TEST | splitLines | join " "
+      SH_TEST:
+        ref: .SH_TEST | splitLines | join " "
     cmds:
       - |
-        poetry run openfisca test {{.TEST}} \
+        poetry run openfisca test {{.PY_TEST}} \
           --country-package=openfisca_country_template \
           --extensions=openfisca_extension_template
+      - bashunit --parallel {{.SH_TEST}}
 
   check-build:
     desc: Check if the build is ok.

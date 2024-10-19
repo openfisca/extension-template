@@ -1651,6 +1651,16 @@ cryptography = ">=2.0"
 jeepney = ">=0.6"
 
 [[package]]
+name = "shfmt-py"
+version = "3.7.0.1"
+description = "Python wrapper around invoking shfmt (https://github.com/mvdan/sh)"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "shfmt_py-3.7.0.1.tar.gz", hash = "sha256:119403c9325e9853e2e5b9b75b12bd1d35baf4f22dbc4795a459c9152ea2d9d2"},
+]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -1847,4 +1857,4 @@ md = ["mdformat-footnote", "mdformat-frontmatter", "mdformat-gfm", "mdformat-gfm
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.9 || ~3.10 || ~3.11"
-content-hash = "6743cf9a9be3f4b0ef28f939a6c6f763b8075dc7a9db568c6629243acf072dd8"
+content-hash = "0afe80c5de69ec97d3471c470a6d7f07876946ba34ea89bc895ad4d07577ddd9"
