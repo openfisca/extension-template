@@ -21,28 +21,19 @@ set -o nounset
 # Prevent errors in a pipeline from being masked.
 set -o pipefail
 
-# Define a cleanup function to be called on script exit or interruption.
-trap cleanup SIGINT SIGTERM ERR EXIT
+# Define a cleanup functions to be called on script exit or interruption.
+trap 'unexpected_error $? $LINENO' ERR
+trap interruped SIGINT
+trap cleanup EXIT
 
 # Define constants for directory and file paths.
 declare -r ROOT_DIR=.
 declare -r TEMP_FILE="$ROOT_DIR/temp.sh"
 declare -r SOURCE_DIR="$ROOT_DIR/src/first_time_setup"
-declare -r TEMPLATE_FILE="$SOURCE_DIR/_template.sh"
+declare -r TEMPLATE_FILE="$SOURCE_DIR/main.sh"
 
-# Define a function to print a message when a task starts.
-function init() {
-  echo "$(tput setaf 5)[⚙]$(tput sgr0) $1"
-}
-# Define a function to print a message when a task passes.
-function pass() {
-  echo "$(tput setaf 6)[λ]$(tput sgr0) $1"
-}
-
-# Define a function to print a message when a task finishes.
-function info() {
-  echo "$(tput setaf 2)[✓]$(tput sgr0) $1"
-}
+# Source the colours script.
+source "$SOURCE_DIR/_colours.sh"
 
 # Main function to drive the script.
 function main() {
@@ -57,16 +48,22 @@ function main() {
 # Function to build the output file.
 function build() {
   local out=$1
-  echo -e "$(init "Building '$out'")"
+  echo -e "$(colours::task "Building '$out'")"
   # Create a temporary file.
   create_temp_file
   # Add each script file in the source directory to the temporary file.
+  echo -e "$(colours::task "Adding files...")"
   for file in "$SOURCE_DIR"/*.sh; do add_file_to_temp "$file"; done
+  echo -e "$(colours::done "Files added...")"
   # Apply the template to the output file.
+  echo -e "$(colours::task "Applying template...")"
   apply_template "$out"
+  echo -e "$(colours::done "Template applied...")"
   # Set the version in the output file.
+  echo -e "$(colours::task "Setting version...")"
   set_version "$out"
-  echo -e "$(info "Building complete :)")"
+  echo -e "$(colours::done "Version set...")"
+  echo -e "$(colours::done "Building complete :)")"
 }
 
 # Function to create the initial temporary file.
@@ -94,7 +91,7 @@ function create_temp_file() {
 function add_file_to_temp() {
   local file=$1
   if [ "$file" != "$TEMPLATE_FILE" ]; then
-    echo -e "$(pass "Adding $file...")"
+    echo -e "$(colours::pass "Adding $file...")"
     # Append the content of the file, starting from the 8th line, to the
     # temporary file.
     tail -n +8 "$file" >>"$TEMP_FILE"
@@ -120,13 +117,28 @@ function set_version() {
   local version
   # Get the version from poetry.
   version=$(poetry version --short)
-  echo -e "$(pass "Setting version to $version...")"
+  echo -e "$(colours::info "Setting version to $version...")"
   # Replace 'X.X.X' with the actual version in the output file.
   sed -i '' "s/X\.X\.X/$version/g" "$out"
 }
 
-# Function to clean up temporary files.
+# Error handling.
+function unexpected_error() {
+  trap - ERR
+  echo -e "$(colours::fail "Error $1 on line $2.")"
+}
+
+# Error handling.
+function interrupted() {
+  trap - ERR
+  echo ""
+  echo -e "$(colours::warn "Interrupted.")"
+}
+
+# Function to clean up the temporary file.
 function cleanup() {
+  trap - EXIT
+  echo -e "$(colours::info "Cleaning up.")"
   rm -f "$TEMP_FILE"
 }
 

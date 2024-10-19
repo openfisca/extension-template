@@ -17,7 +17,7 @@ function helpers::lowercase() {
   local input
   local result
   input="${1:-}"
-  [ -z "$input" ] && helpers::error_and_exit
+  [[ -z $input ]] && helpers::error_and_exit
   result=$(echo "$input" | tr '[:upper:]' '[:lower:]' | sed 'y/āáǎàâäēéěèêëīíǐìîïōóǒòôöūúǔùǖǘǚǜûüĀÁǍÀÂÄĒÉĚÈÊËĪÍǏÌÎÏŌÓǑÒÔÖŪÚǓÙǕǗǙǛÛÜ/aaaaaaeeeeeeiiiiiioooooouuuuuuuuuuAAAAAAEEEEEEIIIIIIOOOOOOUUUUUUUUUU/')
   echo "$result"
 }
@@ -27,7 +27,7 @@ function helpers::remove_apostrophes() {
   local input
   local result
   input="${1:-}"
-  [ -z "$input" ] && helpers::error_and_exit
+  [[ -z $input ]] && helpers::error_and_exit
   # shellcheck disable=SC1112
   result=$(echo "$input" | sed -r 's/[\"'\''«»‘’“”„‟‹›]+/-/g')
   echo "$result"
@@ -38,7 +38,7 @@ function helpers::remove_special_characters() {
   local input
   local result
   input="${1:-}"
-  [ -z "$input" ] && helpers::error_and_exit
+  [[ -z $input ]] && helpers::error_and_exit
   result=$(echo "$input" | sed -r 's/[^a-zA-Z _-]+//g')
   echo "$result"
 }
@@ -48,7 +48,7 @@ function helpers::remove_spaces() {
   local input
   local result
   input="${1:-}"
-  [ -z "$input" ] && helpers::error_and_exit
+  [[ -z $input ]] && helpers::error_and_exit
   result=$(echo "$input" | sed -r 's/[ ]+/_/g')
   echo "$result"
 }
@@ -58,7 +58,7 @@ function helpers::snake_case() {
   local input
   local result
   input="${1:-}"
-  [ -z "$input" ] && helpers::error_and_exit
+  [[ -z $input ]] && helpers::error_and_exit
   result=$(echo "$input" | sed -r 's/[-]+/_/g')
   echo "$result"
 }

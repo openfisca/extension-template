@@ -81,3 +81,32 @@ function test_checks_repo_exists_when_it_does_not() {
   actual=$(checks::repo_exists)
   assert_false "$actual"
 }
+
+function test_checks_persevere() {
+  export CI="true"
+  mock git false
+  actual=$(checks::persevere)
+  assert_true "$actual"
+}
+
+function test_checks_persevere_when_not_in_ci() {
+  export CI=""
+  mock git false
+  actual=$(checks::persevere)
+  assert_true "$actual"
+}
+
+function test_checks_persevere_when_repo_exists() {
+  export CI="true"
+  mock git true
+  actual=$(checks::persevere)
+  assert_true "$actual"
+
+}
+
+function test_checks_persevere_when_not_in_ci_and_repo_exists() {
+  export CI="false"
+  mock git true
+  actual=$(checks::persevere)
+  assert_false "$actual"
+}

@@ -14,6 +14,4 @@ declare -r REPOSITORY_URL=${REPOSITORY_URL:-}
 declare -r CI=${CI:-}
 
 # Export the variables.
-export JURISDICTION_NAME
-export REPOSITORY_URL
-export CI
+export JURISDICTION_NAME REPOSITORY_URL CI

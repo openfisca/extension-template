@@ -78,7 +78,7 @@ tasks:
       - poetry run isort {{.PYTHON}}
       - poetry run ruff format {{.PYTHON}}
       - poetry run mdformat --wrap 79 --number {{.MD}}
-      - poetry run shfmt --write {{.SH}}
+      - poetry run shfmt --write --simplify {{.SH}}
 
   lint:
     desc: Lint the code using different linters.
@@ -115,7 +115,7 @@ tasks:
         poetry run openfisca test {{.PY_TEST}} \
           --country-package=openfisca_country_template \
           --extensions=openfisca_extension_template
-      - bashunit --parallel {{.SH_TEST}}
+      - bashunit --parallel --simple {{.SH_TEST}}
 
   check-build:
     desc: Check if the build is ok.
