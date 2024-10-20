@@ -99,7 +99,7 @@ tasks:
       - poetry run ruff check {{.PYTHON}}
       - poetry run yamllint --strict {{.YAML}}
       - poetry run mdformat --wrap 79 --number --check {{.MD}}
-      - poetry run shfmt --list {{.SH}}
+      - poetry run shellcheck {{.SH}}
 
   test:
     desc: Test the library.
