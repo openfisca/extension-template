@@ -28,12 +28,14 @@ tasks:
   uninstall:
     desc: Uninstall this library and all of its dependencies.
     cmds:
+      - rm -rf lib
       - poetry env remove --all
       - pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
 
   install:
     desc: Install this library and all of its dependencies.
     cmds:
+      - bash bashdep.sh
       - poetry install --all-extras --sync
 
   build:
@@ -115,7 +117,7 @@ tasks:
         poetry run openfisca test {{.PY_TEST}} \
           --country-package=openfisca_country_template \
           --extensions=openfisca_extension_template
-      - bashunit --parallel --simple {{.SH_TEST}}
+      - lib/bashunit --parallel --simple {{.SH_TEST}}
 
   check-build:
     desc: Check if the build is ok.

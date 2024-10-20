@@ -1,112 +1,94 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -o errexit
-
+# @nodoc
 function set_up() {
-  source ./src/first_time_setup/_checks.sh
+  source 'src/first_time_setup/checks.sh'
 }
 
-function test_checks_non_interactive() {
-  export JURISDICTION_NAME="Paris"
-  export REPOSITORY_URL="https://git.paris.fr/openfisca/paris"
-  actual=$(checks::non_interactive)
-  assert_true "$actual"
+# @nodoc
+function test_is_interactive() {
+  actual=$(is::interactive)
+  assert_true "${actual}"
 }
 
-function test_checks_non_interactive_when_name_is_not_set() {
-  unset JURISDICTION_NAME
-  export REPOSITORY_URL="https://git.paris.fr/openfisca/paris"
-  actual=$(checks::non_interactive)
-  assert_false "$actual"
+# @nodoc
+function test_is_interactive_when_one_is_set() {
+  actual=$(is::interactive 'Paris')
+  assert_true "${actual}"
 }
 
-function test_checks_non_interactive_when_url_is_not_set() {
-  export JURISDICTION_NAME="Paris"
-  unset REPOSITORY_URL
-  actual=$(checks::non_interactive)
-  assert_false "$actual"
+# @nodoc
+function test_is_interactive_when_both_are_set() {
+  actual=$(is::interactive 'Paris' 'https://git.paris.fr/openfisca')
+  assert_false "${actual}"
 }
 
-function test_checks_non_interactive_when_both_are_not_set() {
-  unset JURISDICTION_NAME
-  unset REPOSITORY_URL
-  actual=$(checks::non_interactive)
-  assert_false "$actual"
+# @nodoc
+function test_is_ci() {
+  actual=$(is::ci 'true')
+  assert_true "${actual}"
 }
 
-function test_checks_we_are_in_ci() {
-  export CI="true"
-  actual=$(checks::we_are_in_ci)
-  assert_true "$actual"
+# @nodoc
+function test_is_ci_when_set_to_false() {
+  actual=$(is::ci false)
+  assert_false "${actual}"
 }
 
-function test_checks_we_are_in_ci_when_set_to_false() {
-  export CI=false
-  actual=$(checks::we_are_in_ci)
-  assert_false "$actual"
+# @nodoc
+function test_is_ci_when_set_to_zero() {
+  actual=$(is::ci 0)
+  assert_false "${actual}"
 }
 
-function test_checks_we_are_in_ci_when_set_to_zero() {
-  export CI=0
-  actual=$(checks::we_are_in_ci)
-  assert_false "$actual"
+# @nodoc
+function test_is_ci_when_empty() {
+  actual=$(is::ci '')
+  assert_false "${actual}"
 }
 
-function test_checks_we_are_in_ci_when_empty() {
-  export CI=""
-  actual=$(checks::we_are_in_ci)
-  assert_false "$actual"
+# @nodoc
+function test_is_ci_when_not_set() {
+  actual=$(is::ci)
+  assert_false "${actual}"
 }
 
-function test_checks_we_are_in_ci_when_null() {
-  export CI=
-  actual=$(checks::we_are_in_ci)
-  assert_false "$actual"
-}
-
-function test_checks_we_are_in_ci_when_not_set() {
-  unset CI
-  actual=$(checks::we_are_in_ci)
-  assert_false "$actual"
-}
-
-function test_checks_repo_exists() {
+# @nodoc
+function test_is_repo() {
   mock git true
-  actual=$(checks::repo_exists)
-  assert_true "$actual"
+  actual=$(is::repo)
+  assert_true "${actual}"
 }
 
-function test_checks_repo_exists_when_it_does_not() {
+# @nodoc
+function test_is_repo_when_it_is_not() {
   mock git false
-  actual=$(checks::repo_exists)
-  assert_false "$actual"
+  actual=$(is::repo)
+  assert_false "${actual}"
 }
 
-function test_checks_persevere() {
-  export CI="true"
+# @nodoc
+function test_setup_persevere() {
+  actual=$(setup::persevere 'True' 'no')
+  assert_true "${actual}"
+}
+
+# @nodoc
+function test_setup_persevere_when_not_in_ci() {
   mock git false
-  actual=$(checks::persevere)
-  assert_true "$actual"
+  actual=$(setup::persevere 'False' 'N')
+  assert_true "${actual}"
 }
 
-function test_checks_persevere_when_not_in_ci() {
-  export CI=""
-  mock git false
-  actual=$(checks::persevere)
-  assert_true "$actual"
-}
-
-function test_checks_persevere_when_repo_exists() {
-  export CI="true"
-  mock git true
-  actual=$(checks::persevere)
-  assert_true "$actual"
+# @nodoc
+function test_setup_persevere_when_repo_exists() {
+  actual=$(setup::persevere '1' 'y')
+  assert_true "${actual}"
 
 }
 
-function test_checks_persevere_when_not_in_ci_and_repo_exists() {
-  export CI="false"
-  mock git true
-  actual=$(checks::persevere)
-  assert_false "$actual"
+# @nodoc
+function test_setup_persevere_when_not_in_ci_and_repo_exists() {
+  actual=$(setup::persevere 'No' 'Yes')
+  assert_false "${actual}"
 }
