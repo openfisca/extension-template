@@ -12,56 +12,56 @@ set -o nounset
 set -o pipefail
 
 # @internal
-.task() {
+::task() {
   local colour
   colour=$(tput setaf 5)
   echo -n "${colour}"
 }
 
 # @internal
-.user() {
+::user() {
   local colour
   colour=$(tput setaf 4)
   echo -n "${colour}"
 }
 
 # @internal
-.pass() {
+::pass() {
   local colour
   colour=$(tput setaf 6)
   echo -n "${colour}"
 }
 
 # @internal
-.warn() {
+::warn() {
   local colour
   colour=$(tput setaf 3)
   echo -n "${colour}"
 }
 
 # @internal
-.fail() {
+::fail() {
   local colour
   colour=$(tput setaf 1)
   echo -n "${colour}"
 }
 
 # @internal
-.done() {
+::done() {
   local colour
   colour=$(tput setaf 2)
   echo -n "${colour}"
 }
 
 # @internal
-.info() {
+::info() {
   local colour
   colour=$(tput setaf 7)
   echo -n "${colour}"
 }
 
 # @internal
-.none() {
+::none() {
   local colour
   colour=$(tput sgr0)
   echo -n "${colour}"
@@ -74,8 +74,8 @@ colour::task() {
   local task
   local none
   local msg
-  task="$(.task)"
-  none="$(.none)"
+  task="$(::task)"
+  none="$(::none)"
   msg="${task}[⚙] ${input}${none}"
   echo -e "${msg}"
 }
@@ -87,8 +87,8 @@ colour::user() {
   local user
   local none
   local msg
-  user="$(.user)"
-  none="$(.none)"
+  user="$(::user)"
+  none="$(::none)"
   msg="${user}[❯] ${input}${none}"
   echo -e "${msg}"
 }
@@ -100,8 +100,8 @@ colour::pass() {
   local pass
   local none
   local msg
-  pass="$(.pass)"
-  none="$(.none)"
+  pass="$(::pass)"
+  none="$(::none)"
   msg="${pass}[λ] ${input}${none}"
   echo -e "${msg}"
 }
@@ -113,8 +113,8 @@ colour::warn() {
   local warn
   local none
   local msg
-  warn="$(.warn)"
-  none="$(.none)"
+  warn="$(::warn)"
+  none="$(::none)"
   msg="${warn}[!] ${input}${none}"
   echo -e "${msg}"
 }
@@ -126,8 +126,8 @@ colour::fail() {
   local fail
   local none
   local msg
-  fail="$(.fail)"
-  none="$(.none)"
+  fail="$(::fail)"
+  none="$(::none)"
   msg="${fail}[x] ${input}${none}"
   echo -e "${msg}"
 }
@@ -139,8 +139,8 @@ colour::done() {
   local done_
   local none
   local msg
-  done_="$(.done)"
-  none="$(.none)"
+  done_="$(::done)"
+  none="$(::none)"
   msg="${done_}[✓] ${input}${none}"
   echo -e "${msg}"
 }
@@ -152,8 +152,8 @@ colour::info() {
   local info
   local none
   local msg
-  info="$(.info)"
-  none="$(.none)"
+  info="$(::info)"
+  none="$(::none)"
   msg="${info}[i] ${input}${none}"
   echo -e "${msg}"
 }

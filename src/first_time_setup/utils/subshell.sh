@@ -14,23 +14,23 @@ set -o pipefail
 # @internal
 # @global BASH_SOURCE
 # @global BASH_VERSION
-.detect() {
+::detect() {
   local -r size="${#BASH_SOURCE[@]}"
-  local -r tail=$((size-1))
+  local -r tail=$((size - 1))
   if [[ -z ${BASH_VERSION} ]]; then exit 1; fi
-  if [[ "$0" == "${BASH_SOURCE[${tail}]}" ]]; then echo true; fi
+  if [[ $0 == "${BASH_SOURCE[${tail}]}" ]]; then echo true; fi
   echo false
 }
 
 # @description The script is being executed?
 is::executed() {
-  .detect
+  ::detect
 }
 
 # @description The script is being sourced?
 is::sourced() {
   local is_subshell
-  is_subshell=$(.detect)
-  if [[ -z "${is_subshell}" ]]; then echo true; fi
+  is_subshell=$(::detect)
+  if [[ -z ${is_subshell} ]]; then echo true; fi
   echo false
 }

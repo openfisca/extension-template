@@ -16,10 +16,10 @@ set -o pipefail
 is::false() {
   local -r input=${1:-}
   if [[ -z ${input} ]]; then echo true && return; fi
-  if [[ ${input} = '0' ]]; then echo true && return; fi
-  if [[ ${input} = [Nn] ]]; then echo true && return; fi
-  if [[ ${input} = [Nn][Oo] ]]; then echo true && return; fi
-  if [[ ${input} = [Ff][Aa][Ll][Ss][Ee] ]]; then echo true && return; fi
+  if [[ ${input} == '0' ]]; then echo true && return; fi
+  if [[ ${input} == [Nn] ]]; then echo true && return; fi
+  if [[ ${input} == [Nn][Oo] ]]; then echo true && return; fi
+  if [[ ${input} == [Ff][Aa][Ll][Ss][Ee] ]]; then echo true && return; fi
   echo false
 }
 
@@ -28,6 +28,6 @@ is::false() {
 is::true() {
   local is_false
   is_false=$(is::false "${1}")
-  if [[ ${is_false} = 'false' ]]; then echo true; fi
+  if [[ ${is_false} == 'false' ]]; then echo true; fi
   echo false
 }
