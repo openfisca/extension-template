@@ -1,5 +1,6 @@
 #!/bin/bash
 # @name messages
+# @deps checks
 # @brief A package for setting the messages used by the setup script.
 
 # Exit immediately if a command exits with a non-zero status.
@@ -11,13 +12,22 @@ set -o nounset
 # Prevent errors in a pipeline from being masked.
 set -o pipefail
 
+source 'src/first_time_setup/checks.sh'
+
 # Define the version of the setup script.
 _version=$(grep '^version =' pyproject.toml | cut -d '"' -f 2)
 readonly _version
 
 # Define the directory of the setup script.
-_messages_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly _messages_dir
+_messages_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+# Check if we are running in development mode.
+_messages_dev=$(is::dev "${_messages_dir}")
+readonly _messages_dev
+
+# If we are in development mode, move the messages directory up two levels.
+if ${_messages_dev}; then _messages_dir=$(cd "${_messages_dir}/../.." && pwd); fi
+readonly _messages_dev
 
 # Define the welcome message.
 _msg_welcome=$(

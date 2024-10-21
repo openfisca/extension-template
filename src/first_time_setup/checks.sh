@@ -37,6 +37,14 @@ is::repo() {
   is::inside_working_tree
 }
 
+# @description Check if we are running in a development environment.
+# @arg $1 The directory to check.
+is::dev() {
+  local -r dir=${1}
+  if [[ -f "${dir}/README.md" ]]; then echo false && return; fi
+  echo true
+}
+
 # @description Check if the setup should persevere.
 # @arg $1 If we are in a CI environment.
 # @arg $2 If the repository exists.

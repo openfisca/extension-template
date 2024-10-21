@@ -1,16 +1,19 @@
 #!/bin/bash
-# @name setup
-# @deps checks envvars messages utils/*
+# @name main
+# @deps checks envvars messages setup status utils/*
 # @brief Setup a new OpenFisca extension package.
 
 source 'src/first_time_setup/checks.sh'
 source 'src/first_time_setup/envvars.sh'
 source 'src/first_time_setup/messages.sh'
+source 'src/first_time_setup/setup.sh'
+source 'src/first_time_setup/status.sh'
 source 'src/first_time_setup/utils/boolean.sh'
 source 'src/first_time_setup/utils/colours.sh'
 source 'src/first_time_setup/utils/git.sh'
 source 'src/first_time_setup/utils/string.sh'
 source 'src/first_time_setup/utils/subshell.sh'
+source 'src/first_time_setup/utils/url.sh'
 
 # @description Unknown error handling.
 # @arg $1 The line number where the error occurred.
@@ -66,25 +69,6 @@ source 'src/first_time_setup/utils/subshell.sh'
   echo -e "${result}" >&2
 }
 
-# @description Gather information from environment variables.
-# @arg $1 The jurisdiction name.
-# @arg $2 The repository URL.
-# @arg $3 If it is an interactive mode.
-setup::gather_info() {
-  local -r setup_name="${1}"
-  local -r setup_url="${2}"
-  local -r setup_is_int="${3}"
-  echo ""
-  colour::task "Gathering environment variables..."
-  echo ""
-  colour::pass "Jurisdiction name:"
-  echo " =  ${setup_name:-[ unset ]}"
-  colour::pass "Repository URL:"
-  echo " =  ${setup_url:-[ unset ]}"
-  colour::done "Interactive mode (inferred):"
-  echo " =  ${setup_is_int}"
-}
-
 # @description The actual setup function.
 # @arg $1 The jurisdiction name.
 # @arg $2 The jurisdiction name in snake case.
@@ -110,7 +94,6 @@ setup() {
   # Get the last line number of the changelog section.
   last_changelog_number=$(grep --line-number '^# Example Entry' CHANGELOG.md | cut -d ':' -f 1)
   readonly last_changelog_number
-
 }
 
 # @description Main function to drive the script.
@@ -122,6 +105,7 @@ main() {
   local repository_folder
   local root_dir
   local setup_continue
+  local setup_dev
   local setup_dry
   local setup_is_ci
   local setup_is_int
@@ -161,7 +145,14 @@ main() {
   fi
 
   # Set the root directory where the script is located.
-  root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  root_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+  # Check if we are running in development mode.
+  setup_dev=$(is::dev "${root_dir}")
+  readonly setup_dev
+
+  # If we are in development mode, move the root directory up two levels.
+  if ${setup_dev}; then root_dir=$(cd "${root_dir}/../.." && pwd); fi
   readonly root_dir
 
   # Get the environment variables from global to local scope.
@@ -193,22 +184,16 @@ main() {
   colour::info "${MSG_WELCOME}"
 
   # Gather information from environment variables.
-  setup::gather_info "${setup_name}" "${setup_url}" "${setup_is_int}"
+  status::gather_info "${setup_name}" "${setup_url}" "${setup_is_int}"
 
   # Check if we can continue.
-  echo ""
-  colour::task "Checking if we can continue...."
-  echo ""
-  colour::pass "Are we in a CI environment?"
-  echo " =  ${setup_is_ci}"
-  colour::pass "Is there an existing repository already?"
-  echo " =  ${setup_is_repo}"
-  if ${setup_persevere} || ${setup_dry}; then
-    colour::done "Can the setup continue?"
-    echo " =  ${setup_persevere}"
-  else
-    colour::warn "Can the setup continue?"
-    echo " =  ${setup_persevere}"
+  status::check_continue \
+    "${setup_is_ci}" \
+    "${setup_is_repo}" \
+    "${setup_persevere}" \
+    "${setup_dry}"
+
+  if ! ${setup_persevere} && ! ${setup_dry}; then
     echo ""
     ::error "${MSG_STOP}"
     echo ""
@@ -220,7 +205,7 @@ main() {
   colour::info "We will now start setting up your new package."
 
   # Ask for the jurisdiction name.
-  echo ""
+  if [[ -z ${setup_name} ]]; then echo ""; fi
   prompt_name=$(colour::user "${MSG_PROMPT_NAME}")
   while [[ -z ${setup_name} ]]; do
     echo -e -n "${prompt_name}"
@@ -229,18 +214,15 @@ main() {
   readonly setup_name
 
   # Remove spaces from the jurisdiction name.
-  setup_name_label=$(string::lower "${setup_name}")
-  setup_name_label=$(string::decode "${setup_name_label}")
-  setup_name_label=$(string::sanitise "${setup_name_label}")
-  setup_name_label=$(string::trim "${setup_name_label}")
+  setup_name_label=$(setup::name_label "${setup_name}")
   readonly setup_name_label
 
   # Snake case the jurisdiction name.
-  setup_name_snake=$(string::snake "${setup_name_label}")
+  setup_name_snake=$(setup::name_snake "${setup_name_label}")
   readonly setup_name_snake
 
   #  # Ask for the repository URL.
-  echo ""
+  if [[ -z ${setup_url} ]]; then echo ""; fi
   prompt_url=$(colour::user "${MSG_PROMPT_URL}")
   while [[ -z ${setup_url} ]]; do
     echo -e -n "${prompt_url}"
@@ -249,17 +231,11 @@ main() {
   readonly setup_url
 
   # Process the repository folder.
-  repository_folder="${setup_url##*/}"
+  repository_folder=$(setup::repository_folder "${setup_url}")
   readonly repository_folder
 
   # Print a summary of the information gathered.
-  echo ""
-  colour::done "Jurisdiction title set to:"
-  echo " =  ${setup_name:-[ unset ]}"
-  colour::done "Jurisdiction Python label set to:"
-  echo " =  ${setup_name_snake:-[ unset ]}"
-  colour::done "Git repository URL set to:"
-  echo " =  ${setup_url:-[ unset ]}"
+  status::pre_summary "${setup_name}" "${setup_name_snake}" "${setup_url}"
 
   # Shall we proceed?
   echo ""
