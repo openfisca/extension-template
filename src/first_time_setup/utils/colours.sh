@@ -1,5 +1,5 @@
 #!/bin/bash
-# @name colours
+# @name utils/colours
 # @brief A package for coloring output and messages.
 
 # Exit immediately if a command exits with a non-zero status.
@@ -15,6 +15,7 @@ set -o pipefail
 ::task() {
   local colour
   colour=$(tput setaf 5)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -22,6 +23,7 @@ set -o pipefail
 ::user() {
   local colour
   colour=$(tput setaf 4)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -29,6 +31,7 @@ set -o pipefail
 ::pass() {
   local colour
   colour=$(tput setaf 6)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -36,6 +39,7 @@ set -o pipefail
 ::warn() {
   local colour
   colour=$(tput setaf 3)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -43,6 +47,7 @@ set -o pipefail
 ::fail() {
   local colour
   colour=$(tput setaf 1)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -50,6 +55,7 @@ set -o pipefail
 ::done() {
   local colour
   colour=$(tput setaf 2)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -57,6 +63,7 @@ set -o pipefail
 ::info() {
   local colour
   colour=$(tput setaf 7)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -64,6 +71,7 @@ set -o pipefail
 ::none() {
   local colour
   colour=$(tput sgr0)
+  readonly colour
   echo -n "${colour}"
 }
 
@@ -78,6 +86,9 @@ colour::task() {
   none="$(::none)"
   msg="${task}[⚙] ${input}${none}"
   echo -e "${msg}"
+  readonly task
+  readonly none
+  readonly msg
 }
 
 # @description Coloring user prompts.
@@ -91,6 +102,9 @@ colour::user() {
   none="$(::none)"
   msg="${user}[❯] ${input}${none}"
   echo -e "${msg}"
+  readonly user
+  readonly none
+  readonly msg
 }
 
 # @description Coloring work-in-progress operations.
@@ -103,6 +117,9 @@ colour::pass() {
   pass="$(::pass)"
   none="$(::none)"
   msg="${pass}[λ] ${input}${none}"
+  readonly pass
+  readonly none
+  readonly msg
   echo -e "${msg}"
 }
 
@@ -116,6 +133,9 @@ colour::warn() {
   warn="$(::warn)"
   none="$(::none)"
   msg="${warn}[!] ${input}${none}"
+  readonly warn
+  readonly none
+  readonly msg
   echo -e "${msg}"
 }
 
@@ -129,6 +149,9 @@ colour::fail() {
   fail="$(::fail)"
   none="$(::none)"
   msg="${fail}[x] ${input}${none}"
+  readonly fail
+  readonly none
+  readonly msg
   echo -e "${msg}"
 }
 
@@ -142,6 +165,9 @@ colour::done() {
   done_="$(::done)"
   none="$(::none)"
   msg="${done_}[✓] ${input}${none}"
+  readonly done_
+  readonly none
+  readonly msg
   echo -e "${msg}"
 }
 
@@ -155,5 +181,8 @@ colour::info() {
   info="$(::info)"
   none="$(::none)"
   msg="${info}[i] ${input}${none}"
+  readonly info
+  readonly none
+  readonly msg
   echo -e "${msg}"
 }

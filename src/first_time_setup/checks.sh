@@ -1,5 +1,6 @@
 #!/bin/bash
 # @name checks
+# @deps utils/boolean utils/git
 # @brief A package for checks and validations.
 
 # Exit immediately if a command exits with a non-zero status.
@@ -46,6 +47,8 @@ setup::persevere() {
   local is_repo
   is_ci=$(is::true "${ci}")
   is_repo=$(is::true "${repo}")
+  readonly is_ci
+  readonly is_repo
   if ! ${is_ci} && ${is_repo}; then echo false && return; fi
   echo true
 }

@@ -1,5 +1,5 @@
 #!/bin/bash
-# @name bool
+# @name utils/boolean
 # @brief A package to check if a value is a boolean.
 
 # Exit immediately if a command exits with a non-zero status.
@@ -28,6 +28,7 @@ is::false() {
 is::true() {
   local is_false
   is_false=$(is::false "${1}")
-  if [[ ${is_false} == 'false' ]]; then echo true; fi
+  readonly is_false
+  if [[ ${is_false} == 'false' ]]; then echo true && return; fi
   echo false
 }

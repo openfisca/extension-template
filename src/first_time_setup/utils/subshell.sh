@@ -1,5 +1,5 @@
 #!/bin/bash
-# @name subshell
+# @name utils/subshell
 # @brief A package for detecting if the script is being sourced or executed.
 
 # Exit immediately if a command exits with a non-zero status.
@@ -17,8 +17,8 @@ set -o pipefail
 ::detect() {
   local -r size="${#BASH_SOURCE[@]}"
   local -r tail=$((size - 1))
-  if [[ -z ${BASH_VERSION} ]]; then exit 1; fi
-  if [[ $0 == "${BASH_SOURCE[${tail}]}" ]]; then echo true; fi
+  if [[ -z ${BASH_VERSION} ]]; then return 1; fi
+  if [[ $0 == "${BASH_SOURCE[${tail}]}" ]]; then echo true && return; fi
   echo false
 }
 
@@ -31,6 +31,7 @@ is::executed() {
 is::sourced() {
   local is_subshell
   is_subshell=$(::detect)
-  if [[ -z ${is_subshell} ]]; then echo true; fi
+  readonly is_subshell
+  if [[ -z ${is_subshell} ]]; then echo true && return; fi
   echo false
 }
