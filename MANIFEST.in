@@ -1,2 +1,2 @@
-graft openfisca_extension_template
+graft src
 global-exclude *~ *.py[cod] *.so
