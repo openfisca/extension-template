@@ -1,5 +1,12 @@
 # Changelog
 
+### 2.0.1 - [#59](https://github.com/openfisca/extension-template/pull/59)
+
+- Minor change.
+- Impacted areas: `**/*.md`
+- Details:
+  - Apply formatter to markdown files
+
 # 2.0.0 - [#54](https://github.com/openfisca/extension-template/pull/54)
 
 - Technical Changes
