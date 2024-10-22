@@ -14,6 +14,7 @@ readonly DEPENDENCIES=(
 )
 
 # Load, configure and run bashdep
+# shellcheck disable=SC1091
 source lib/bashdep
 bashdep::setup dir="lib" silent=false
 bashdep::install "${DEPENDENCIES[@]}"

@@ -36,8 +36,8 @@ MSG
 # @description Define the prompt for the jurisdiction name.
 msg::prompt_name() {
   cat <<MSG
-The name of the jurisdiction (usually a country, e.g. Île-d'Yeu, Val-d'Isère...)
-    you will model the rules of:
+The name of the jurisdiction (usually a city or a region, e.g. Île-d'Yeu,
+    Val-d'Isère...) you will model the rules of:
 MSG
 }
 
