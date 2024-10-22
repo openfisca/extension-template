@@ -119,7 +119,7 @@
 - Details:
   - Update `flake8`, `autopep8` and `pycodestyle`
 
-## 1.3.0
+## 1.3.0 -
 
 - Technical change
 - Details:
@@ -127,7 +127,7 @@
   - Update test command
   - Update `country-template` dependency (uses Core v27)
 
-### 1.2.0 - [#18](https://github.com/openfisca/extension-template/pull/18)
+## 1.2.0 - [#18](https://github.com/openfisca/extension-template/pull/18)
 
 - Technical change
 - Details:
@@ -219,21 +219,21 @@ _Note: the 1.1.5 version has been unpublished as it was used for test analysis_
 
 - Declare package compatible with OpenFisca Country Template v3
 
-## 1.1.3 - [#8](https://github.com/openfisca/extension-template/pull/8)
+### 1.1.3 - [#8](https://github.com/openfisca/extension-template/pull/8)
 
 - Technical improvement:
 - Details:
   - Adapt to version `21.0.0` of Openfisca-Core and version `2.1.0` of
     Country-Template
 
-## 1.1.2 - [#7](https://github.com/openfisca/extension-template/pull/7)
+### 1.1.2 - [#7](https://github.com/openfisca/extension-template/pull/7)
 
 - Technical improvement:
 - Details:
   - Adapt to version `20.0.0` of Openfisca-Core and version `1.4.0` of
     Country-Template
 
-## 1.1.1 - [#5](https://github.com/openfisca/extension-template/pull/5)
+### 1.1.1 - [#5](https://github.com/openfisca/extension-template/pull/5)
 
 - Technical improvement: adapt to version `17.0.0` of Openfisca-Core and
   version `1.2.4` of Country-Template
@@ -242,3 +242,15 @@ _Note: the 1.1.5 version has been unpublished as it was used for test analysis_
   - Gather tests in the directory `tests`. The command `make test` runs only
     the tests contained in that directory.
   - Add a changelog.
+
+# Example Entry
+
+### 0.0.1 - [#0](https://github.com/openfisca/openfisca-extension-template/pull/0)
+
+- Tax and benefit system evolution.
+- Impacted periods: all.
+- Impacted areas:
+  - `parameters`.
+  - `variables`.
+- Details:
+  - Import extension from template
