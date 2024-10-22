@@ -33,4 +33,4 @@ lint: clean
 	poetry run shellcheck `git ls-files | grep "\.sh$$"`
 
 test: clean
-	poetry run openfisca test --country-package=openfisca_country_template --extensions=openfisca_extension_template openfisca_extension_template/tests
+	poetry run openfisca test --country-package=openfisca_country_template --extensions=openfisca_extension_template tests
