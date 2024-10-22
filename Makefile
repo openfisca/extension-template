@@ -20,6 +20,7 @@ format:
 	@# `make` needs `$$` to output `$`. Ref: http://stackoverflow.com/questions/2382764.
 	poetry run ruff format `git ls-files | grep "\.py$$"`
 	poetry run isort `git ls-files | grep "\.py$$"`
+	poetry run mdformat --wrap 79 --number `git ls-files | grep "\.md$$"`
 
 lint: clean
 	@# Do not analyse .gitignored files.
@@ -27,7 +28,7 @@ lint: clean
 	poetry run isort --check `git ls-files | grep "\.py$$"`
 	poetry run ruff check `git ls-files | grep "\.py$$"`
 	poetry run yamllint `git ls-files | grep "\.yaml$$"`
-	poetry run mdformat --wrap 79 --number --check README.md
+	poetry run mdformat --wrap 79 --number --check `git ls-files | grep "\.md$$"`
 
 test: clean
 	poetry run openfisca test --country-package=openfisca_country_template --extensions=openfisca_extension_template openfisca_extension_template/tests
