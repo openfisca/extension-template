@@ -1,6 +1,7 @@
 all: test
 
 uninstall:
+	rm -rf ./lib
 	poetry env remove --all
 	pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
 
@@ -13,6 +14,7 @@ install:
 	@# Install OpenFisca-Extension-Template for development.
 	@# The editable version of OpenFisca-Extension-Template allows contributors
 	@# to test as they code.
+	/bin/bash bashdep.sh
 	poetry install --all-extras --sync
 
 format:
@@ -34,3 +36,4 @@ lint: clean
 
 test: clean
 	poetry run openfisca test --country-package=openfisca_country_template --extensions=openfisca_extension_template tests
+	lib/bashunit --parallel --simple tests/**/*.sh
