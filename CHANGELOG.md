@@ -1,5 +1,12 @@
 # Changelog
 
+### 2.0.2 - [#60](https://github.com/openfisca/extension-template/pull/60)
+
+- Minor change.
+- Impacted areas: `README.md`
+- Details:
+  - Adapt README.md from country-template
+
 ### 2.0.1 - [#59](https://github.com/openfisca/extension-template/pull/59)
 
 - Minor change.
