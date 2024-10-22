@@ -117,7 +117,7 @@ macOS and Microsoft Windows.
 
 ### Setting-up a Virtual Environment with venv
 
-In order to limit dependencies conflicts, we recommend using a
+In order to limit dependency conflicts, we recommend using a
 [virtual environment](https://www.python.org/dev/peps/pep-0405/) with
 [venv](https://docs.python.org/3/library/venv.html).
 
