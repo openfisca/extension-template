@@ -58,7 +58,7 @@ build::main() {
 # @arg $2 The temporary file path.
 # @arg $3 The template file path.
 build::add_file_to_temp() {
-  if [[ "${1}" != "${3}" ]]; then
+  if [[ ${1} != "${3}" ]]; then
     echo -e "$(colour::pass "Adding ${1}...")"
     tail -n +7 "${1}" >>"${2}"
   fi

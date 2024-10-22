@@ -35,7 +35,7 @@ fi
 
 if [[ -z ${ROOT_PATH+A} ]]; then
   if ${DEV_MODE}; then
-    readonly ROOT_PATH=$(cd "${SCRIPT_PATH}/../.." && pwd);
+    readonly ROOT_PATH=$(cd "${SCRIPT_PATH}/../.." && pwd)
   else
     readonly ROOT_PATH=${SCRIPT_PATH}
   fi
