@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# The first condition is to check if the variable GITHUB_REF is set.
-if [[ -n "${GITHUB_REF+A}" ]] && [[ ${GITHUB_REF#refs/heads/} == master ]]; then
+# shellcheck disable=SC2154
+if [[ ${GITHUB_REF#refs/heads/} == master ]]; then
   echo "No need for a version check on master."
   exit 0
 fi
@@ -11,7 +11,7 @@ if ! "$(dirname "${BASH_SOURCE[0]}")"/has-functional-changes.sh; then
   exit 0
 fi
 
-current_version=$(poetry version --short)
+readonly current_version=$(poetry version --short)
 
 if git rev-parse --verify --quiet "${current_version}"; then
   echo "Version ${current_version} already exists in commit:"
