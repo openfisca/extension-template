@@ -1,5 +1,12 @@
 # Changelog
 
+### 2.0.3 - [#61](https://github.com/openfisca/extension-template/pull/61)
+
+- Minor change.
+- Impacted areas: `**/*.sh`
+- Details:
+  - Add `shellcheck` and `shfmt` (shell formatter)
+
 ### 2.0.2 - [#60](https://github.com/openfisca/extension-template/pull/60)
 
 - Minor change.
