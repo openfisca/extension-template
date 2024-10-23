@@ -280,6 +280,16 @@ new contributions are tested in an isolated manner on Github Actions.
 Follow these steps to set up an isolated environment for testing your
 contributions as Github Actions does.
 
+#### Install Task
+
+This repository uses [Task](https://taskfile.dev/installation/) to manage
+tasks. You can take a look at the `Taskfile.yml` to see all the available
+tasks:
+
+```sh
+task --list
+```
+
 #### Set up an isolated environment
 
 First, make sur [Tox](https://tox.wiki/en/4.23.0/) is installed on your

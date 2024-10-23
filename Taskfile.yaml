@@ -111,3 +111,12 @@ tasks:
     cmds:
       - poetry run twine check dist/*
       - defer: rm -rf build dist
+
+  serve:
+    desc: Serve the Web API.
+    cmds:
+      - |
+        poetry run openfisca serve \
+          --port 5000 \
+          --country-package openfisca_country_template \
+          --extensions openfisca_extension_template
