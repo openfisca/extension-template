@@ -136,21 +136,28 @@ file::find_lineno() {
 }
 
 # @internal
-# @arg $1 The error message.
-string.error() {
-  echo -e "$(colour::fail "${1}")" >&2
-  return 1
+string.decode.a() {
+  echo "${1}" | sed 'y/āáǎàâãäåĀÁǍÀÂÃÄÅ/aaaaaaaaAAAAAAAA/'
 }
 
 # @internal
-string.unidecode.find() {
-  local pip poetry
-  pip=$(command -v unidecode 2>/dev/null)
-  poetry=$(poetry run which unidecode 2>/dev/null)
-  [[ -n ${pip} ]] && echo "${pip}" && return
-  [[ -n ${poetry} ]] && echo "${poetry}" && return
-  string.error "Unidecode not found. Install it with 'pip install unidecode'."
-  return 1
+string.decode.e() {
+  echo "${1}" | sed 'y/ēéěèêëĒÉĚÈÊË/eeeeeeEEEEEE/'
+}
+
+# @internal
+string.decode.i() {
+  echo "${1}" | sed 'y/īíǐìîïĪÍǏÌÎÏ/iiiiiiIIIIII/'
+}
+
+# @internal
+string.decode.o() {
+  echo "${1}" | sed 'y/ōóǒòôõöŌÓǑÒÔÕÖ/oooooooOOOOOOO/'
+}
+
+# @internal
+string.decode.u() {
+  echo "${1}" | sed 'y/ūúǔùûüǖǘǚǜŪÚǓÙÛÜǕǗǙǛ/uuuuuuuuuuUUUUUUUUUU/'
 }
 
 # @description Convert a string to lowercase.
@@ -162,9 +169,17 @@ string::lower() {
 # @description Decode a string to ASCII.
 # @arg $1 The string to decode.
 string::decode() {
-  local -r unidecode=$(string.unidecode.find)
-  [[ -z ${unidecode} ]] && return 1
-  echo "${1}" | "${unidecode}"
+  local string="${1}"
+  local -r fx=(
+    string.decode.a
+    string.decode.e
+    string.decode.i
+    string.decode.o
+    string.decode.u
+  )
+  local fn
+  for fn in "${fx[@]}"; do string=$("${fn}" "${string}"); done
+  echo "${string}"
 }
 
 # @description Remove special characters from a string.
@@ -284,15 +299,9 @@ if [[ -z ${ROOT_DIR+A} ]]; then
   readonly ROOT_DIR=${ROOT_PATH##*/}
 fi
 
-# @internal
-msg.version() {
-  grep '^version =' pyproject.toml | cut -d '"' -f 2
-}
-
 # @description Define the welcome message.
 msg::welcome() {
-  local version
-  version=$(msg.version)
+  local -r version='0.1.0'
   cat <<MSG
 Welcome to the OpenFisca Extension Template setup script v${version}!
 
@@ -358,7 +367,7 @@ MSG
 # @arg $1 The jurisdiction name.
 setup::name_label() {
   local name="${1}"
-  local -r fx=(string::lower string::decode string::sanitise string::trim)
+  local -r fx=(string::decode string::lower string::sanitise string::trim)
   local fn
   for fn in "${fx[@]}"; do name=$("${fn}" "${name}"); done
   echo "${name}"

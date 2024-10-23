@@ -10,11 +10,11 @@
 
 # Add latest bashunit release to your dependencies
 readonly DEPENDENCIES=(
-  "https://github.com/TypedDevs/bashunit/releases/download/0.18.0/bashunit"
+  "https://github.com/openfisca/openfisca-setup-builder/releases/download/0.1.0/first-time-setup.sh"
 )
 
 # Load, configure and run bashdep
 # shellcheck disable=SC1091
 source lib/bashdep
-bashdep::setup dir="lib" silent=false
+bashdep::setup dir="." silent=false
 bashdep::install "${DEPENDENCIES[@]}"
