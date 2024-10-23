@@ -1,5 +1,11 @@
 # Changelog
 
+### 2.0.5 - [#63](https://github.com/openfisca/extension-template/pull/63)
+
+- Technical improvement
+- Details:
+  - Add `first-time-setup.sh`
+
 ### 2.0.4 - [#62](https://github.com/openfisca/extension-template/pull/62)
 
 - Technical improvement

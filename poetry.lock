@@ -1763,17 +1763,6 @@ files = [
 test = ["coverage", "pytest", "pytest-cov"]
 
 [[package]]
-name = "unidecode"
-version = "1.3.8"
-description = "ASCII transliterations of Unicode text"
-optional = true
-python-versions = ">=3.5"
-files = [
-    {file = "Unidecode-1.3.8-py3-none-any.whl", hash = "sha256:d130a61ce6696f8148a3bd8fe779c99adeb4b870584eeb9526584e9aa091fd39"},
-    {file = "Unidecode-1.3.8.tar.gz", hash = "sha256:cfdb349d46ed3873ece4586b96aa75258726e2fa8ec21d6f00a591d98806c2f4"},
-]
-
-[[package]]
 name = "urllib3"
 version = "2.2.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1857,9 +1846,9 @@ type = ["pytest-mypy"]
 
 [extras]
 ci = ["twine"]
-dev = ["codespell", "isort", "mdformat-footnote", "mdformat-frontmatter", "mdformat-gfm", "mdformat-gfm-alerts", "ruff", "ruff-lsp", "shellcheck-py", "shfmt-py", "unidecode", "yamllint"]
+dev = ["codespell", "isort", "mdformat-footnote", "mdformat-frontmatter", "mdformat-gfm", "mdformat-gfm-alerts", "ruff", "ruff-lsp", "shellcheck-py", "shfmt-py", "yamllint"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.9 || ~3.10 || ~3.11"
-content-hash = "d559968c438afcaf366af3e5fe6164bce3367830d52509103c43ee9b729ac6ac"
+content-hash = "b8c298b2f60c164f9b560c6f3894651264415314309cb56f6f58a0b9345c5465"

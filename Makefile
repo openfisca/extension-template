@@ -36,4 +36,3 @@ lint: clean
 
 test: clean
 	poetry run openfisca test --country-package=openfisca_country_template --extensions=openfisca_extension_template tests
-	lib/bashunit --parallel --simple tests/**/*.sh

@@ -8,7 +8,6 @@
   chmod +x lib/bashdep
 }
 
-# Add latest bashunit release to your dependencies
 readonly DEPENDENCIES=(
   "https://github.com/openfisca/openfisca-setup-builder/releases/download/0.1.0/first-time-setup.sh"
 )
