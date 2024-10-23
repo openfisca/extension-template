@@ -1,5 +1,13 @@
 # Changelog
 
+### 2.0.4 - [#62](https://github.com/openfisca/extension-template/pull/62)
+
+- Technical improvement
+- Impacted areas: `all`
+- Details:
+  - Adopt src layout to avoid importing bugs and properly testing built
+    versions
+
 ### 2.0.3 - [#61](https://github.com/openfisca/extension-template/pull/61)
 
 - Minor change.
