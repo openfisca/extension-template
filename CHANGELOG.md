@@ -1,5 +1,26 @@
 # Changelog
 
+### 2.0.5 - [#58](https://github.com/openfisca/extension-template/pull/58)
+
+- Technical Changes
+- Details:
+  - Add `Taskfile` to replace `Makefile`
+
+### 2.0.4 - [#62](https://github.com/openfisca/extension-template/pull/62)
+
+- Technical improvement
+- Impacted areas: `all`
+- Details:
+  - Adopt src layout to avoid importing bugs and properly testing built
+    versions
+
+### 2.0.3 - [#61](https://github.com/openfisca/extension-template/pull/61)
+
+- Minor change.
+- Impacted areas: `**/*.sh`
+- Details:
+  - Add `shellcheck` and `shfmt` (shell formatter)
+
 ### 2.0.2 - [#60](https://github.com/openfisca/extension-template/pull/60)
 
 - Minor change.
