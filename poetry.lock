@@ -1315,6 +1315,40 @@ files = [
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pyproject-fmt"
+version = "2.4.3"
+description = "Format your pyproject.toml file"
+optional = true
+python-versions = ">=3.9"
+files = [
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:f84a3bf5e296c899591da3179befe08f38ce50dbbeb9bfdd90322c65ca0c2477"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:7fb2350e7243daa5a4c25c5d9d0230aa7365f880e80e0d31363b3782d613df7b"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:86ceb5beb3c2a45940dde50abe93f34db75fa1782870c00cba91cf621bedd88b"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:3fd23a5dd33ccd2af626580d3089b71347e78ddef0531ca2c1eb91e5c1b2afb8"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:c9008ce82ba59bd8125285120da89cfe0c02d3ea809b179176510647a4639de1"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:adf22afbf4ca3ebe28ebc75186787f9138c8009db107d3df61921c2bd9589519"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1e52fb2bbfbc1f4c2e37e5abba913c3b99655a31d0df38fea8fb1707287a2d5a"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:35979fa3371ed5866f6e84f4e3cb9d53e8616970633cbc40c19d82e7c19f4e9f"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-musllinux_1_1_i686.whl", hash = "sha256:163f37763dd8e87e38c8cba63fa156038f052a0448dcf651772131a150b28749"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:558351ce471dccc4a1b0a275515580a2d3012ecdf57be7a87f5f6251d24bb8f6"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-win32.whl", hash = "sha256:aa1de547dcb08921bcbba6d62755ae33f4723c8c6b2fe2ba63148bcbfbe87191"},
+    {file = "pyproject_fmt-2.4.3-cp38-abi3-win_amd64.whl", hash = "sha256:31c23b2abe33ab5899f8ef9ed64349589824a0a9a2b2b8ada3e97880c7de7db0"},
+    {file = "pyproject_fmt-2.4.3-pp310-pypy310_pp73-macosx_10_12_x86_64.whl", hash = "sha256:d8951be3815b0048301bb392dbfe30e2ce85c3a1bf6c130047ada8530901ec73"},
+    {file = "pyproject_fmt-2.4.3-pp310-pypy310_pp73-macosx_11_0_arm64.whl", hash = "sha256:377210d6a478bf7b0eab8b9592498c24471b2517d3b2d298ce7fe0a00349b49a"},
+    {file = "pyproject_fmt-2.4.3-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c95cdfb3a5cf6e173fe445e01d0440b0913dcc3729e75cc7fede473542bc6014"},
+    {file = "pyproject_fmt-2.4.3-pp38-pypy38_pp73-macosx_10_12_x86_64.whl", hash = "sha256:39ff10559e16e27f93b57b47b0a58d5c4dfe16d172619ff3b97095e223cb97ef"},
+    {file = "pyproject_fmt-2.4.3-pp38-pypy38_pp73-macosx_11_0_arm64.whl", hash = "sha256:984f0a7133254748640cfc0664984b1101e9efc47f351222ba9a18ab5fbae3c2"},
+    {file = "pyproject_fmt-2.4.3-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:dcea6aa46fcc675b44d556a7306fead693ae204efd6efac59e2ce2a45853ec8e"},
+    {file = "pyproject_fmt-2.4.3-pp39-pypy39_pp73-macosx_10_12_x86_64.whl", hash = "sha256:8a3c50856ea7f4845e07702fd3be809b4e8683784527f9b1aaac4d2c226d5ab6"},
+    {file = "pyproject_fmt-2.4.3-pp39-pypy39_pp73-macosx_11_0_arm64.whl", hash = "sha256:95d98483a6bacffa5175b693c6b58f2ccd44fffd822cdbfc290bab0bd9e02eaa"},
+    {file = "pyproject_fmt-2.4.3-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:309e1371c7ab4d12bfa7dda4cee3a68db68b18247ecfb898c52c61b95fc9d275"},
+    {file = "pyproject_fmt-2.4.3.tar.gz", hash = "sha256:68c9dc7e360cd169ba323238bab8d0659cbf0ce4380bf787973c3a042829de70"},
+]
+
+[package.dependencies]
+tomli = {version = ">=2.0.2", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pytest"
 version = "8.3.3"
 description = "pytest: simple powerful testing with Python"
@@ -1493,13 +1527,13 @@ idna2008 = ["idna"]
 
 [[package]]
 name = "rich"
-version = "13.9.2"
+version = "13.9.3"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 optional = true
 python-versions = ">=3.8.0"
 files = [
-    {file = "rich-13.9.2-py3-none-any.whl", hash = "sha256:8c82a3d3f8dcfe9e734771313e606b39d8247bb6b826e196f4914b333b743cf1"},
-    {file = "rich-13.9.2.tar.gz", hash = "sha256:51a2c62057461aaf7152b4d611168f93a9fc73068f8ded2790f29fe2b5366d0c"},
+    {file = "rich-13.9.3-py3-none-any.whl", hash = "sha256:9836f5096eb2172c9e77df411c1b009bace4193d6a481d534fea75ebba758283"},
+    {file = "rich-13.9.3.tar.gz", hash = "sha256:bc1e01b899537598cf02579d2b9f4a415104d3fc439313a7a2c165d76557a08e"},
 ]
 
 [package.dependencies]
@@ -1846,9 +1880,9 @@ type = ["pytest-mypy"]
 
 [extras]
 ci = ["twine"]
-dev = ["codespell", "isort", "mdformat-footnote", "mdformat-frontmatter", "mdformat-gfm", "mdformat-gfm-alerts", "ruff", "ruff-lsp", "shellcheck-py", "shfmt-py", "yamllint"]
+dev = ["codespell", "isort", "mdformat-footnote", "mdformat-frontmatter", "mdformat-gfm", "mdformat-gfm-alerts", "pyproject-fmt", "ruff", "ruff-lsp", "shellcheck-py", "shfmt-py", "yamllint"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.9 || ~3.10 || ~3.11"
-content-hash = "b8c298b2f60c164f9b560c6f3894651264415314309cb56f6f58a0b9345c5465"
+content-hash = "aae94300018e762d8c739cec35dfcc199c5c0101e37b45f359e63fa142a540f7"

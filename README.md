@@ -11,8 +11,9 @@ This repository is here to help you bootstrap your own OpenFisca
 ## Setting up your Extension Package
 
 This set of instructions **only needs to be followed once** and will create
-your own copy of this boilerplate directory, customising it to the country you
-want to work on. You will need to have [Git](https://git-scm.com) installed.
+your own copy of this boilerplate directory, customising it to the jurisdiction
+you want to work on. You will need to have [Git](https://git-scm.com)
+installed.
 
 ### Using GitHub (recommended for GitHub users)
 

@@ -1,0 +1,113 @@
+version: '3'
+run: once
+
+vars:
+  VERSION:
+    sh: poetry version --short
+  PY:
+    sh: git ls-files "*.py"
+  YAML:
+    sh: git ls-files "*.yaml" "*.yml"
+  MD:
+    sh: git ls-files "*.md"
+  SH:
+    sh: git ls-files "*.sh"
+  PY_TEST:
+    sh: git ls-files "tests/*.yaml" "tests/*.yaml"
+
+tasks:
+  default:
+    aliases: [all]
+    deps:
+      - task: clean
+      - task: lint
+      - task: test
+
+  uninstall:
+    desc: Uninstall this library and all of its dependencies.
+    cmds:
+      - poetry env remove --all
+      - pip freeze | grep -v "^-e" | sed "s/@.*//" | xargs pip uninstall -y
+
+  install:
+    desc: Install this library and all of its dependencies.
+    cmds:
+      - poetry install --all-extras --sync
+
+  build:
+    desc: Build the library.
+    deps:
+      - task: clean
+    cmds:
+      - poetry build
+
+  clean:
+    desc: Remove all of the build files.
+    cmds:
+      - rm -rf build dist
+      - find . -name "*.pyc" -exec rm \{\} \;
+      - find . -type d -name "__pycache__" -exec rm -r {} +
+
+  format:
+    desc: Format the code using different formatters.
+    vars:
+      PY:
+        ref: .PY | splitLines | join " "
+      YAML:
+        ref: .YAML | splitLines | join " "
+      MD:
+        ref: .MD | splitLines | join " "
+      SH:
+        ref: .SH | splitLines | join " "
+    deps:
+      - task: clean
+    cmds:
+      - poetry run codespell --write-changes {{.PY}} {{.YAML}} {{.MD}} {{.SH}}
+      - poetry run isort {{.PY}}
+      - poetry run ruff format {{.PY}}
+      - poetry run mdformat {{.MD}}
+      - poetry run shfmt --write --simplify {{.SH}}
+      - poetry run pyproject-fmt pyproject.toml
+
+  lint:
+    desc: Lint the code using different linters.
+    vars:
+      PY:
+        ref: .PY | splitLines | join " "
+      YAML:
+        ref: .YAML | splitLines | join " "
+      MD:
+        ref: .MD | splitLines | join " "
+      SH:
+        ref: .SH | splitLines | join " "
+    deps:
+      - task: clean
+    cmds:
+      - poetry run codespell {{.PY}} {{.YAML}} {{.MD}} {{.SH}}
+      - poetry run isort --check {{.PY}}
+      - poetry run ruff check {{.PY}}
+      - poetry run yamllint --strict {{.YAML}}
+      - poetry run mdformat --check {{.MD}}
+      - poetry run shellcheck {{.SH}}
+
+  test:
+    desc: Test the library.
+    deps:
+      - task: clean
+    vars:
+      PY_TEST:
+        ref: .PY_TEST | splitLines | join " "
+    cmds:
+      - |
+        poetry run openfisca test {{.PY_TEST}} \
+          --country-package=openfisca_country_template \
+          --extensions=openfisca_extension_template
+
+  test-build:
+    desc: Check if the build is ok.
+    deps:
+      - task: clean
+      - task: build
+    cmds:
+      - poetry run twine check dist/*
+      - defer: rm -rf build dist
