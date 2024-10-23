@@ -4,7 +4,7 @@ requires = [ "poetry-core>=1.7", "setuptools>=61" ]
 
 [tool.poetry]
 name = "openfisca-extension_template"
-version = "2.0.3"
+version = "2.0.4"
 description = "An OpenFisca extension that adds some variables to an already-existing tax and benefit system."
 license = "AGPL-3.0-only"
 authors = [ "OpenFisca Team <contact@openfisca.org>" ]
@@ -24,7 +24,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Information Analysis",
 ]
-packages = [ { include = "openfisca_extension_template", from = "." } ]
+packages = [ { include = "openfisca_extension_template", from = "src" } ]
 
 [tool.poetry.dependencies]
 python = "~3.9 || ~3.10 || ~3.11"
@@ -116,9 +116,9 @@ commands = [
     [
         "openfisca",
         "test",
+        "tests",
         "--country-package=openfisca_country_template",
         "--extensions=openfisca_extension_template",
-        "openfisca_extension_template/tests",
     ]
 ]
 commands_pre = [
