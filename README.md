@@ -11,8 +11,9 @@ This repository is here to help you bootstrap your own OpenFisca
 ## Setting up your Extension Package
 
 This set of instructions **only needs to be followed once** and will create
-your own copy of this boilerplate directory, customising it to the country you
-want to work on. You will need to have [Git](https://git-scm.com) installed.
+your own copy of this boilerplate directory, customising it to the jurisdiction
+you want to work on. You will need to have [Git](https://git-scm.com)
+installed.
 
 ### Using GitHub (recommended for GitHub users)
 
@@ -278,6 +279,16 @@ new contributions are tested in an isolated manner on Github Actions.
 
 Follow these steps to set up an isolated environment for testing your
 contributions as Github Actions does.
+
+#### Install Task
+
+This repository uses [Task](https://taskfile.dev/installation/) to manage
+tasks. You can take a look at the `Taskfile.yml` to see all the available
+tasks:
+
+```sh
+task --list
+```
 
 #### Set up an isolated environment
 
