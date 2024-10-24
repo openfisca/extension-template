@@ -1,5 +1,12 @@
 # Changelog
 
+### 2.0.6 - [#64](https://github.com/openfisca/extension-template/pull/64)
+
+- Minor change.
+- Impacted areas: `pyproject.toml`
+- Details:
+  - Include tests on distribution for integration testing
+
 ### 2.0.5 - [#58](https://github.com/openfisca/extension-template/pull/58)
 
 - Technical Changes

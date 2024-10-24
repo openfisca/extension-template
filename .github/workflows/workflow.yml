@@ -83,6 +83,9 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     needs: [build]
+    strategy:
+      matrix:
+        python: [3.9.x, 3.10.x, 3.11.x, 3.12.x, 3.13.x]
 
     steps:
       - name: Checkout
@@ -102,10 +105,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9.20
+          python-version: ${{ matrix.python }}
 
       - name: Test python files
-        run: tox -r -e py39
+        run: tox -r -e py
 
   dist:
     runs-on: ubuntu-24.04
