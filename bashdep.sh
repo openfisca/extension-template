@@ -9,7 +9,7 @@
 }
 
 readonly DEPENDENCIES=(
-  "https://github.com/openfisca/openfisca-setup-builder/releases/download/0.1.0/first-time-setup.sh"
+  "https://github.com/openfisca/openfisca-setup-builder/releases/download/0.1.1/first-time-setup.sh"
 )
 
 # Load, configure and run bashdep

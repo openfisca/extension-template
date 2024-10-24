@@ -301,7 +301,7 @@ fi
 
 # @description Define the welcome message.
 msg::welcome() {
-  local -r version='0.1.0'
+  local -r version='0.1.1'
   cat <<MSG
 Welcome to the OpenFisca Extension Template setup script v${version}!
 
@@ -363,6 +363,13 @@ Bootstrap complete, you can now push this codebase to your remote repository.
 MSG
 }
 
+# @description Define the message for when running in dry mode.
+msg::dry_mode() {
+  cat <<MSG
+»skipping the next step as we are running in dry mode«
+MSG
+}
+
 # @description Set up the jurisdiction name label
 # @arg $1 The jurisdiction name.
 setup::name_label() {
@@ -399,7 +406,9 @@ setup::changelog_lineno() {
 # @arg $1 The parent folder.
 # @arg $2 The setup name label.
 # @arg $3 The first commit message.
+# @arg $4 If we are running in dry mode.
 setup::first_commit() {
+  if "${4:-false}"; then return; fi
   cd ..
   mv "${1}" openfisca-"${2}"
   cd openfisca-"${2}"
@@ -416,7 +425,9 @@ setup::first_commit() {
 # @arg $2 The jurisdiction snake cased.
 # @arg $3 The normal jurisdiction name.
 # @arg $4 The list of files to replace.
+# @arg $5 If we are running in dry mode.
 setup::replace_references() {
+  if "${5:-false}"; then return; fi
   sed -i.template "s|openfisca-extension_template|openfisca-${1}|g" \
     README.md Makefile pyproject.toml CONTRIBUTING.md
   # shellcheck disable=SC2086
@@ -429,14 +440,18 @@ setup::replace_references() {
 
 # @description Remove bootstrap instructions.
 # @arg $1 The last line number of the bootstrapping section in the README.md.
+# @arg $2 If we are running in dry mode.
 setup::remove_bootstrap_instructions() {
+  if "${2:-false}"; then return; fi
   sed -i.template -e "3,${1}d" README.md
   find . -name "*.template" -type f -delete
 }
 
 # @description Prepare README.md and CONTRIBUTING.md.
 # @arg $1 The repository URL.
+# @arg $2 If we are running in dry mode.
 setup::prepare_readme_contributing() {
+  if "${2:-false}"; then return; fi
   sed -i.template "s|https://example.com/repository|${1}|g" \
     README.md CONTRIBUTING.md
   find . -name "*.template" -type f -delete
@@ -444,7 +459,9 @@ setup::prepare_readme_contributing() {
 
 # @description Prepare CHANGELOG.md.
 # @arg $1 The last line number of the changelog section in the CHANGELOG.md.
+# @arg $2 If we are running in dry mode.
 setup::prepare_changelog() {
+  if "${2:-false}"; then return; fi
   sed -i.template -e "1,${1}d" CHANGELOG.md
   find . -name "*.template" -type f -delete
 }
@@ -452,7 +469,9 @@ setup::prepare_changelog() {
 # @description Prepare pyproject.toml.
 # @arg $1 The repository URL.
 # @arg $2 The repository folder.
+# @arg $3 If we are running in dry mode.
 setup::prepare_pyproject() {
+  if "${3:-false}"; then return; fi
   sed -i.template \
     "s|https://github.com/openfisca/extension-template|${1}|g" \
     pyproject.toml
@@ -464,12 +483,16 @@ setup::prepare_pyproject() {
 
 # @description Rename the package.
 # @arg $1 The new package name.
+# @arg $2 If we are running in dry mode.
 setup::rename_package() {
+  if "${2:-false}"; then return; fi
   git mv openfisca_extension_template "${1}"
 }
 
 # Remove single use first time setup files
+# @arg $1 If we are running in dry mode.
 setup::remove_files() {
+  if "${1:-false}"; then return; fi
   git rm .github/workflows/first-time-setup.yml &>/dev/null 2>&1
   git rm bashdep.sh &>/dev/null 2>&1
   git rm build.sh &>/dev/null 2>&1
@@ -480,7 +503,9 @@ setup::remove_files() {
 
 # @description Second commit and first tag.
 # @arg $1 The second commit message.
+# @arg $2 If we are running in dry mode.
 setup::second_commit() {
+  if "${2:-false}"; then return; fi
   git add .
   git commit --no-gpg-sign --quiet --message "${1}" \
     --author='OpenFisca Bot <bot@openfisca.org>'
@@ -520,7 +545,7 @@ status::check_continue() {
     colour::pass 'Can the setup continue?'
     colour::logs "${3}"
     if "${4}"; then
-      colour::warn 'Persevering because the setup is being run in dry mode.'
+      colour::warn '»persevering because the setup is being run in dry mode«'
     fi
   else
     colour::warn 'Can the setup continue?'
@@ -682,41 +707,37 @@ main() {
   # Initialise the repository.
   if ! "${ci}" || "${dry}"; then
     echo ''
+    if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
     colour::pass 'Initialise git repository...'
-    if ! "${dry}"; then
-      setup::init_repository "${ROOT_DIR}" "${label}" "${first_commit}"
-    else
-      colour::warn 'Skipping git repository initialisation because of dry run'
-    fi
+    setup::first_commit "${ROOT_DIR}" "${label}" "${first_commit}" "${dry}"
     colour::pass "Commit made to 'main' with message:"
     colour::logs "${first_commit}"
   fi
 
   # And go on...
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Replace default extension_template references'
   local -r files=$(git ls-files "src/${module}")
-  setup::replace_references "${label}" "${snake}" "${name}" "${files}"
+  setup::replace_references "${label}" "${snake}" "${name}" "${files}" "${dry}"
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Remove bootstrap instructions'
-  setup::remove_bootstrap_instructions "${lineno_readme}"
+  setup::remove_bootstrap_instructions "${lineno_readme}" "${dry}"
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Prepare README.md and CONTRIBUTING.md'
-  setup::prepare_readme_contributing "${url}"
+  setup::prepare_readme_contributing "${url}" "${dry}"
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Prepare CHANGELOG.md'
-  setup::prepare_changelog "${lineno_changelog}"
+  setup::prepare_changelog "${lineno_changelog}" "${dry}"
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Prepare pyproject.toml'
-  setup::prepare_pyproject "${url}" "${folder}"
+  setup::prepare_pyproject "${url}" "${folder}" "${dry}"
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Rename package to:'
   colour::logs "${package}"
-  if ! "${dry}"; then
-    setup::rename_package "${package}"
-  else
-    colour::warn 'Skipping renaming of package because of dry run'
-  fi
+  setup::rename_package "${package}" "${dry}"
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Remove single use first time setup files'
-  if ! "${dry}"; then
-    setup::remove_files
-  else
-    colour::warn 'Skipping removal of first time setup files because of dry run'
-  fi
+  setup::remove_files "${dry}"
 
   # Committing and tagging take directly place in the GitHub Actions workflow.
   if "${ci}"; then
@@ -727,12 +748,9 @@ main() {
   fi
 
   # Second commit and first tag.
+  if "${dry}"; then colour::warn "$(msg::dry_mode)"; fi
   colour::pass 'Committing and tagging...'
-  if ! "${dry}"; then
-    setup::second_commit "${second_commit}"
-  else
-    colour::warn 'Skipping committing and tagging because of dry run'
-  fi
+  setup::second_commit "${second_commit}" "${dry}"
   colour::pass "Second commit and first tag made on 'main' branch:"
   colour::logs "${second_commit}"
 
