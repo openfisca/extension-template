@@ -25,6 +25,7 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Information Analysis",
 ]
 packages = [ { include = "openfisca_extension_template", from = "src" } ]
+include = [ { path = "tests", format = "sdist" } ]
 
 [tool.poetry.dependencies]
 python = "~3.9 || ~3.10 || ~3.11"
