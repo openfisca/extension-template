@@ -19,7 +19,6 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            tests
             poetry.lock
             pyproject.toml
           key: tests-${{ github.sha }}
@@ -59,7 +58,6 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            tests
             poetry.lock
             pyproject.toml
           key: tests-${{ github.sha }}
@@ -94,7 +92,6 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            tests
             poetry.lock
             pyproject.toml
           key: tests-${{ github.sha }}
@@ -122,7 +119,6 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            tests
             poetry.lock
             pyproject.toml
           key: tests-${{ github.sha }}

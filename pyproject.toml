@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "poetry.core.masonry.api"
-requires = [ "poetry-core>=1.7", "setuptools>=61" ]
+requires = [ "poetry-core>=1.7" ]
 
 [tool.poetry]
 name = "openfisca-extension_template"
@@ -25,7 +25,7 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Information Analysis",
 ]
 packages = [ { include = "openfisca_extension_template", from = "src" } ]
-include = [ { path = "tests", format = "sdist" } ]
+include = [ { path = "tests/*", format = [ "sdist", "wheel" ] } ]
 
 [tool.poetry.dependencies]
 python = "~3.9 || ~3.10 || ~3.11"
@@ -123,18 +123,9 @@ commands = [
   [
     "openfisca",
     "test",
-    "tests",
+    "{envsitepackagesdir}/tests",
     "--country-package=openfisca_country_template",
     "--extensions=openfisca_extension_template",
-  ],
-]
-commands_pre = [
-  [
-    "pip",
-    "install",
-    "--find-links",
-    ".",
-    "openfisca-extension_template",
   ],
 ]
 
