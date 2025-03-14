@@ -1,5 +1,12 @@
 # Changelog
 
+### 2.0.7 - [#65](https://github.com/openfisca/extension-template/pull/65)
+
+- Minor change.
+- Impacted areas: `tests`
+- Details:
+  - Adapt to `country-template` 8.0.0
+
 ### 2.0.6 - [#64](https://github.com/openfisca/extension-template/pull/64)
 
 - Minor change.
@@ -102,13 +109,13 @@
 
 - Minor change.
 - Details:
-  - Add support for `flake8-bugbear` \< 22
+  - Add support for `flake8-bugbear` < 22
 
 ### 1.3.7 - [#33](https://github.com/openfisca/extension-template/pull/33)
 
 - Minor change.
 - Details:
-  - Add support for `flake8-print` \< 5
+  - Add support for `flake8-print` < 5
 
 ### 1.3.6 - [#36](https://github.com/openfisca/extension-template/pull/36)
 
