@@ -31,7 +31,7 @@ include = [ { path = "tests/*", format = [ "sdist", "wheel" ] } ]
 
 [tool.poetry.dependencies]
 python = "~3.9 || ~3.10 || ~3.11 || ~3.12 || ~3.13"
-openfisca-country_template = ">=7.1.8"
+openfisca-country_template = ">=8"
 codespell = { version = "^2.3.0", optional = true }
 isort = { version = "^5.13.2", optional = true }
 mdformat-footnote = { version = "^0.1.1", optional = true }
