@@ -3,12 +3,12 @@
   input:
     households:
       household:
-        parents: [parent1, parent2]
+        adults: [adult1, adult2]
         children: [child1, child2]
     persons:
-      parent1:
+      adult1:
         age: 35
-      parent2:
+      adult2:
         age: 35
       child1:
         age: 8
@@ -21,11 +21,11 @@
   input:
     households:
       household:
-        parents: [parent1, parent2]
+        adults: [adult1, adult2]
     persons:
-      parent1:
+      adult1:
         age: 35
-      parent2:
+      adult2:
         age: 35
   output:
     local_town_child_allowance: 0
